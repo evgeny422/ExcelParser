@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for d in document_list %}
+            <tr>
+                <th scope="row">{{ d.pk }}</th>
+                <td>{{ d.title }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock content %}

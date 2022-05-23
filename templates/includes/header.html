@@ -1,0 +1,73 @@
+<nav class="navbar bg-light">
+    <div class="container-fluid">
+        <form class="d-flex" action="{% url 'search' %}" method="get">
+            <input class="form-control mr-2" type="search" placeholder="Input title of file" name="q"
+                   aria-label="Search">
+            <button type="submit" class="btn btn-outline-dark" type="submit">
+                Search
+            </button>
+        </form>
+
+
+        <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                Сортировка по
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Дедлайн</a></li>
+                <li><a class="dropdown-item" href="#">Статус</a></li>
+                <li><a class="dropdown-item" href="#">План действий</a></li>
+            </ul>
+        </div>
+
+        <div style="display:flex;">
+
+            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">
+                Add file
+            </button>
+
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Enter sudo password</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body d-flex">
+                            <form class="d-flex" action="{% url 'add_document' %}" method="post"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div>
+                                    <input type="text" name="File_title" placeholder="Title of file">
+                                    <input type="file" name="File">
+                                </div>
+                                <div>
+                                    <input type="submit" value="Upload" class="btn btn-success">
+                                </div>
+
+
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</nav>
+
