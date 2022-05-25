@@ -2,7 +2,8 @@
 
 
     <div class="container-fluid">
-        <div><a href="{% url 'documents' %}" style="text-decoration:None"><span style="color: #1b1b1b">Главная страница</span></a></div>
+        <div><a href="{% url 'documents' %}" style="text-decoration:None"><span
+                style="color: #1b1b1b">Школа ректоров 21</span></a></div>
         <form class="d-flex" action="{% url 'search' %}" method="get">
             <input class="form-control mr-2" type="search" placeholder="Название файла" name="q"
                    aria-label="Search">
@@ -25,6 +26,39 @@
             </div>
         </form>
         <div style="display:flex;">
+            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal3"
+                    style="margin-right: 5px;">
+                FaQ
+            </button>
+            <div class="modal fade" id="myModal3">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Правила подсчета очков</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body d-box">
+                            <div>
+                                <h5>Рейтинг по статусу.</h5>
+
+                            </div>
+                            <div><h5>Рейтинг по дедлайну.</h5></div>
+                            <div><h5>Рейтинг по плану.</h5></div>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
 
             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">
                 Загрузить файл
@@ -47,6 +81,7 @@
                                 {% csrf_token %}
                                 <div>
                                     <input type="text" name="File_title" placeholder="Название">
+                                    <input type="password" name="password" placeholder="Пароль">
                                     <input type="file" name="File">
                                 </div>
                                 <div>

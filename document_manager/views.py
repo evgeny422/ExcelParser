@@ -1,3 +1,6 @@
+import os
+
+from django.core.exceptions import PermissionDenied
 from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.views import View
@@ -66,9 +69,11 @@ class DocumentAdd(View):
     def post(self, request):
         file = request.FILES.get('File')
         file_name = request.POST.get('File_title')
+        password = request.POST.get('password')
         document = Document(
             title=file_name,
             uploaded_file=file,
+            password=password,
         )
         document.save()
 
@@ -89,22 +94,35 @@ class DocumentDownload(View):
 
 class DocumentDelete(View):
     """
-    Дает возможность пользователю скачать файл
+    Дает возможность пользователю удалить файл
     """
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise PermissionDenied
         obj = Document.objects.get(id=kwargs['pk'])
+        path = obj.get_file_path()
+        os.remove(path)
         obj.delete()
         return redirect('documents')
 
 
 class DocumentUpdate(View):
+    """
+    Обновление документа
+    """
+
     def post(self, request, *args, **kwargs):
         obj = Document.objects.get(pk=kwargs['pk'])
+        path = obj.get_file_path()
+
+        if obj.password.strip() != request.POST.get('password'):
+            raise PermissionDenied
         file = request.FILES.get('File')
         file_name = request.POST.get('File_title')
+
         obj.title = file_name
         obj.uploaded_file = file
         obj.save()
-
+        os.remove(path)
         return redirect('documents')
