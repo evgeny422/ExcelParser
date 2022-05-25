@@ -6,14 +6,88 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Title</th>
+            <th scope="col">Название</th>
+            <th scope="col">Рейтинг по статусу</th>
+            <th scope="col">Рейтинг по дедлайну</th>
+            <th scope="col">Рейтинг по составленному плану</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         {% for d in document_list %}
             <tr>
                 <th scope="row">{{ d.pk }}</th>
-                <td>{{ d.title }}</td>
+                <td><a href="{% url 'document' d.pk %}" style="text-decoration:None">{{ d.title }}</a></td>
+                <td>{{ d.status_ratio }}</td>
+                <td>{{ d.deadline_ratio }}</td>
+                <td>{{ d.action_plan_ratio }}</td>
+                <td>
+                    <a title="Скачать" style="padding-right: 2px; text-decoration:None"
+                       href="{% url 'download' d.pk %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                        </svg>
+                    </a>
+
+
+                    <a title="Обновить файл" style="padding-right: 2px; text-decoration:None;"  data-bs-toggle="modal"
+                       data-bs-target="#myModal1" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                        </svg>
+                    </a>
+
+                    <div class="modal fade" id="myModal1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Обновление файла</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body d-flex">
+                                    <form class="d-flex" action="{% url 'update' d.pk %}" method="post"
+                                          enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div>
+                                            <input type="text" name="File_title" placeholder="Название">
+                                            <input type="file" name="File">
+                                        </div>
+                                        <div>
+                                            <input type="submit" value="Загрузить" class="btn btn-success">
+                                        </div>
+
+
+                                    </form>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <a title="Удалить файл" href="{% url 'delete' d.pk %}" style="text-decoration:None">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-basket3" viewBox="0 0 16 16">
+                            <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM3.394 15l-1.48-6h-.97l1.525 6.426a.75.75 0 0 0 .729.574h9.606a.75.75 0 0 0 .73-.574L15.056 9h-.972l-1.479 6h-9.21z"/>
+                        </svg>
+                    </a>
+                </td>
+
+
             </tr>
         {% endfor %}
 

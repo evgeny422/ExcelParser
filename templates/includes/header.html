@@ -1,30 +1,33 @@
 <nav class="navbar bg-light">
+
+
     <div class="container-fluid">
+        <div><a href="{% url 'documents' %}" style="text-decoration:None"><span style="color: #1b1b1b">Главная страница</span></a></div>
         <form class="d-flex" action="{% url 'search' %}" method="get">
-            <input class="form-control mr-2" type="search" placeholder="Input title of file" name="q"
+            <input class="form-control mr-2" type="search" placeholder="Название файла" name="q"
                    aria-label="Search">
             <button type="submit" class="btn btn-outline-dark" type="submit">
-                Search
+                Поиск
             </button>
         </form>
 
-
-        <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                Сортировка по
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">Дедлайн</a></li>
-                <li><a class="dropdown-item" href="#">Статус</a></li>
-                <li><a class="dropdown-item" href="#">План действий</a></li>
-            </ul>
-        </div>
-
+        <form class="d-flex" action="{% url 'sorted_documents' %}" method="get">
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Сортировка по
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><input class="dropdown-item" type="submit" name="orderby" value="Дедлайн"></li>
+                    <li><input class="dropdown-item" type="submit" name="orderby" value="Статус"></li>
+                    <li><input class="dropdown-item" type="submit" name="orderby" value="План действий"></li>
+                </ul>
+            </div>
+        </form>
         <div style="display:flex;">
 
             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">
-                Add file
+                Загрузить файл
             </button>
 
             <div class="modal fade" id="myModal">
@@ -33,7 +36,7 @@
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Enter sudo password</h4>
+                            <h4 class="modal-title">Загрузка нового файла</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
@@ -43,11 +46,11 @@
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div>
-                                    <input type="text" name="File_title" placeholder="Title of file">
+                                    <input type="text" name="File_title" placeholder="Название">
                                     <input type="file" name="File">
                                 </div>
                                 <div>
-                                    <input type="submit" value="Upload" class="btn btn-success">
+                                    <input type="submit" value="Загрузить" class="btn btn-success">
                                 </div>
 
 
@@ -56,7 +59,7 @@
 
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
                         </div>
 
                     </div>

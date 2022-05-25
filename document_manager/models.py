@@ -2,7 +2,7 @@ from abc import abstractmethod
 
 from django.db import models
 
-from document_manager.services.dataframes_services import Parser
+from document_manager.services.dataframes_services import ParserToDatabase
 
 
 class DocumentAbstract:
@@ -27,10 +27,14 @@ class Document(DocumentAbstract, models.Model):
     """
     Модель документа
     """
-    title = models.CharField(max_length=200)
-    uploaded_file = models.FileField(upload_to="media/")
-    date_time_of_added = models.DateTimeField(auto_now=True)
-    content = models.TextField(blank=True)
+    title = models.CharField('Название', max_length=200)
+    uploaded_file = models.FileField('Файл', upload_to="media/")
+    date_time_of_added = models.DateTimeField('Время добавления', auto_now=True)
+    content = models.TextField('Содержание', blank=True)
+
+    deadline_ratio = models.IntegerField('Дедлайн', blank=True, null=True)
+    status_ratio = models.IntegerField('Статус', blank=True, null=True)
+    action_plan_ratio = models.IntegerField('План действий', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Документ'
@@ -50,9 +54,14 @@ class Document(DocumentAbstract, models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        parser = Parser(self)
+        pars = ParserToDatabase(self).get_total_values()
+
         if (not self.content) or (not self.pk):
-            self.content = parser.parse()
+            self.content = 'Content'  # parser.parse()
+            self.deadline_ratio = pars.get('deadline', 0)
+            self.status_ratio = 1  # pars.get['Образование']['statuses']
+            self.action_plan_ratio = pars.get('task', 0)
+
         return super(Document, self).save(*args, **kwargs)
 
     def __str__(self):
