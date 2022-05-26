@@ -1,7 +1,6 @@
 from abc import abstractmethod
 
 from django.core.exceptions import FieldError
-from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.timezone import now
 
@@ -41,7 +40,7 @@ class Document(DocumentAbstract, models.Model):
     status_ratio = models.IntegerField('Статус', blank=True, null=True)
     action_plan_ratio = models.IntegerField('План действий', blank=True, null=True)
 
-    password = models.CharField(max_length=150)
+    password = models.CharField('Пароль', max_length=150)
 
     class Meta:
         verbose_name = 'Документ'
@@ -64,7 +63,7 @@ class Document(DocumentAbstract, models.Model):
             raise FieldError('Не передан файл')
         if validate_file_extension(self.uploaded_file):
             super().save(*args, **kwargs)
-        pars = ParserToDatabase(self).check_content_of_file().get_total_values()
+        pars = ParserToDatabase(self).get_total_values()
 
         if (not self.date_time_of_updated) or (self.date_time_of_updated < now()):
             self.content = 'Content'

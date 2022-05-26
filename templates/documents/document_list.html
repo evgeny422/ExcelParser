@@ -7,23 +7,110 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Название</th>
-            <th scope="col">Рейтинг по статусу</th>
-            <th scope="col">Рейтинг по дедлайну</th>
-            <th scope="col">Рейтинг по составленному плану</th>
+            <th scope="col">
+                <div class="d-flex">
+                    <span>Рейтинг по статусу</span>
+                    <form class="d-flex" action="{% url 'sorted_documents' %}" method="get" style="display: none;">
+                        <div>
+                            <label>
+                                <input type="submit" style="display: none;" name="orderby" value="-status_ratio"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                </svg>
+                            </label>
+
+                            <label>
+                                <input type="submit" style="display: none;" name="orderby" value="status_ratio"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                                </svg>
+                            </label>
+
+                        </div>
+                    </form>
+                </div>
+
+            </th>
+            <th scope="col">
+
+                <div class="d-flex">
+                    <span>Рейтинг по дедлайну</span>
+                    <form class="d-flex" action="{% url 'sorted_documents' %}" method="get" style="display: none;">
+                        <div>
+                            <label>
+                                <input type="submit" style="display: none;" name="orderby" value="-deadline_ratio"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                </svg>
+                            </label>
+
+                            <label>
+                                <input type="submit" style="display: none;" name="orderby" value="deadline_ratio"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                                </svg>
+                            </label>
+
+                        </div>
+                    </form>
+                </div>
+
+            </th>
+            <th scope="col">
+
+                <div class="d-flex">
+                    <span>Рейтинг по составленному плану</span>
+                    <form class="d-flex" action="{% url 'sorted_documents' %}" method="get" style="display: none;">
+                        <div>
+                            <label>
+                                <input type="submit" style="display: none;" name="orderby" value="-action_plan_ratio"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                </svg>
+                            </label>
+
+                            <label>
+                                <input type="submit" style="display: none;" name="orderby" value="action_plan_ratio"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                                </svg>
+                            </label>
+
+                        </div>
+                    </form>
+                </div>
+            </th>
             <th scope="col"></th>
         </tr>
         </thead>
+
         <tbody>
         {% for d in document_list %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td><a href="{% url 'document' d.pk %}" style="text-decoration:None">{{ d.title }}</a></td>
-                <td>{{ d.status_ratio }}</td>
+                <td>
+                    {{ d.status_ratio }}
+
+
+                </td>
                 <td>{{ d.deadline_ratio }}</td>
                 <td>{{ d.action_plan_ratio }}</td>
                 <td>
 
-                    
+
                     <a title="Скачать" style="padding-right: 2px; text-decoration:None"
                        href="{% url 'download' d.pk %}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -60,12 +147,15 @@
                                           enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <div>
-                                            <input type="text" name="File_title" placeholder="Название"
-                                                   value="{{ d.title }}">
-                                            <input type="password" name="password" placeholder="Пароль">
-                                            <input type="file" name="File">
+                                            {{ formDocUpdate.non_field_errors }}
+                                            {{ formDocUpdate.password.errors }}
+                                            {#                                            {{ formDocUpdate.non }}#}
+                                            {{ formDocUpdate.as_p }}
+                                            {{ formDocUpdate.non_field_errors }}
+                                            {{ formDocUpdate.password.errors }}
 
                                         </div>
+
                                         <div>
                                             <input type="submit" value="Загрузить" class="btn btn-success">
                                         </div>

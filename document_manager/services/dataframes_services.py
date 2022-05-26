@@ -16,15 +16,13 @@ class ParserToDatabase:
         self.wb = load_workbook(self._path, read_only=True)
         self.sheetlist = self.wb.sheetnames
 
-    def check_content_of_file(self):
-
+    def check_sheet(self):
         if {'ОБЩИЙ ПЛАН', 'Образование', 'Дело', 'Организация и коллектив', 'Репутация', 'Здоровье',
             'Семья и окружение'} != set(self.sheetlist):
             self.wb.close()
-            os.remove(self._path)
             self._document.delete()
             raise ValidationError('Нереверный макет файла!')
-        return self
+        return self.sheetlist
 
     def get_values_by_sheet(self):
         """
@@ -33,7 +31,7 @@ class ParserToDatabase:
 
         checklist = {}
         result = {}
-        for page in self.sheetlist[1:]:
+        for page in self.check_sheet()[1:]:
             for v, _, _, _, _, _, c, i in self.wb[page]['H37':'O56']:
 
                 if not checklist.get(str(page)):

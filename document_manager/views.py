@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import ListView, DetailView
 
+from document_manager.forms import DocumentUpdateForm
 from document_manager.models import Document
 
 
@@ -15,6 +16,11 @@ class DocumentsList(ListView):
     model = Document
     queryset = Document.objects.values('pk', 'title', 'deadline_ratio', 'status_ratio', 'action_plan_ratio')
     template_name = 'documents/document_list.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['update_form'] = DocumentUpdateForm()
+        return context
 
 
 class DocumentDetail(View):
@@ -35,11 +41,21 @@ class DocumentSort(ListView):
             'Дедлайн': 'deadline_ratio',
             'Статус': 'status_ratio',
             'План действий': 'action_plan_ratio',
+
         }
         return values.get(value)
 
     def get_queryset(self):
-        key = self.get_model_field(value=self.request.GET.get("orderby").strip())
+        values = {
+            'Дедлайн': 'deadline_ratio',
+            'Статус': 'status_ratio',
+            'План действий': 'action_plan_ratio',
+
+        }
+        key = self.request.GET.get("orderby").strip()
+        if key in values.keys():
+            key = values.get(key)
+
         return Document.objects.order_by(key)
 
     def get_context_data(self, *args, **kwargs):
@@ -115,14 +131,17 @@ class DocumentUpdate(View):
     def post(self, request, *args, **kwargs):
         obj = Document.objects.get(pk=kwargs['pk'])
         path = obj.get_file_path()
+        form = DocumentUpdateForm(request.POST, request.FILES, instance=obj)
 
-        if obj.password.strip() != request.POST.get('password'):
-            raise PermissionDenied
-        file = request.FILES.get('File')
-        file_name = request.POST.get('File_title')
+        if form.is_valid():
+            form.save()
+            os.remove(path)
+            return redirect('documents')
+        # if obj.password.strip() != request.POST.get('password'):
+        #     raise PermissionDenied
+        # file, file_name = request.FILES.get('uploaded_file'), request.POST.get('title')
+        # obj.title, obj.uploaded_file = file_name, file
+        #
+        # obj.save()
 
-        obj.title = file_name
-        obj.uploaded_file = file
-        obj.save()
-        os.remove(path)
-        return redirect('documents')
+        return render(request, 'documents/message.html', {'message': 'Введен неверный пароль'})
