@@ -16,7 +16,7 @@
         <tbody>
         {% for d in document_list %}
             <tr>
-                <th scope="row">{{ d.pk }}</th>
+                <th scope="row">{{ forloop.counter }}</th>
                 <td><a href="{% url 'document' d.pk %}" style="text-decoration:None">{{ d.title }}</a></td>
                 <td>{{ d.status_ratio }}</td>
                 <td>{{ d.deadline_ratio }}</td>
