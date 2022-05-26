@@ -22,6 +22,8 @@
                 <td>{{ d.deadline_ratio }}</td>
                 <td>{{ d.action_plan_ratio }}</td>
                 <td>
+
+                    
                     <a title="Скачать" style="padding-right: 2px; text-decoration:None"
                        href="{% url 'download' d.pk %}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -33,7 +35,7 @@
 
 
                     <a title="Обновить файл" style="padding-right: 2px; text-decoration:None;" data-bs-toggle="modal"
-                       data-bs-target="#myModal1" href="#">
+                       data-bs-target="#myModal{{ d.pk }}" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -42,7 +44,7 @@
                         </svg>
                     </a>
 
-                    <div class="modal fade" id="myModal1">
+                    <div class="modal fade" id="myModal{{ d.pk }}">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
