@@ -4,6 +4,7 @@
     <div class="container-fluid">
         <div><a href="{% url 'documents' %}" style="text-decoration:None"><span
                 style="color: #1b1b1b">Школа ректоров 21</span></a></div>
+        {#              Сортировки          #}
         <form class="d-flex" action="{% url 'search' %}" method="get">
             <input class="form-control mr-2" type="search" placeholder="Название файла" name="q"
                    aria-label="Search">
@@ -25,7 +26,10 @@
                 </ul>
             </div>
         </form>
+
+        {#       FAQ     #}
         <div style="display:flex;">
+
             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal3"
                     style="margin-right: 5px;">
                 FAQ

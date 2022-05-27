@@ -7,7 +7,7 @@ from openpyxl import load_workbook
 
 class ParserToDatabase:
     """
-        Класс для парсинга файлов
+        Класс для парсинга файлов "Я - как проект"
     """
 
     def __init__(self, document):
@@ -17,6 +17,10 @@ class ParserToDatabase:
         self.sheetlist = self.wb.sheetnames
 
     def check_sheet(self):
+        """
+        Валидация файла по имеющимся листам
+        """
+
         if {'ОБЩИЙ ПЛАН', 'Образование', 'Дело', 'Организация и коллектив', 'Репутация', 'Здоровье',
             'Семья и окружение'} != set(self.sheetlist):
             self.wb.close()
@@ -62,6 +66,10 @@ class ParserToDatabase:
         return result
 
     def get_sum_of_status(self, values: dict):
+        """
+        Подсчет итоговых баллов по статусу, в соответствии с правилами
+        """
+
         points = {
             None: 0,
             'Выполнено': 2,
@@ -78,7 +86,7 @@ class ParserToDatabase:
 
     def get_total_values(self):
         """
-        Возвращает суммарные очки
+        Возвращает суммарные очки за все разделы
         """
         sheet_values_list = self.get_values_by_sheet()
         res = {'deadline': 0, 'status': self.get_sum_of_status(sheet_values_list), 'task': 0}

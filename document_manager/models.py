@@ -59,6 +59,10 @@ class Document(DocumentAbstract, models.Model):
         return f"{self.content}"
 
     def save(self, *args, **kwargs):
+        """
+        Сохранение в БД значений суммарных очков  после парсинга документа
+        """
+
         if not self.uploaded_file:
             raise FieldError('Не передан файл')
         if validate_file_extension(self.uploaded_file):
