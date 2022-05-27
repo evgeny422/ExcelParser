@@ -27,3 +27,4 @@ class DocumentUpdateForm(ModelForm):
         self.instance.uploaded_file = self.cleaned_data['uploaded_file']
         self.instance.title = self.cleaned_data['title']
         self.instance.save()
+        return self.instance

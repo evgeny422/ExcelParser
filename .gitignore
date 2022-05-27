@@ -8,6 +8,7 @@ media
 static
 .idea
 .db.sqlite3
+ExcelParser/settings_dev.py
 # Backup files #
 *.bak
 

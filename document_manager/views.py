@@ -2,7 +2,7 @@ import os
 
 from django.core.exceptions import PermissionDenied
 from django.http import FileResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView, DetailView
 
@@ -28,7 +28,7 @@ class DocumentDetail(View):
     """Информация об отдельном документе"""
 
     def get(self, request, *args, **kwargs):
-        doc = Document.objects.get(id=kwargs['pk'])
+        doc = get_object_or_404(Document, pk=kwargs['pk'])
         return render(request, 'documents/document_detail.html', context={'document': doc})
 
 
@@ -36,15 +36,6 @@ class DocumentSort(ListView):
     """Сортировка документов по ключу, где ключ - столбец в файле"""
 
     template_name = 'documents/document_list.html'
-
-    def get_model_field(self, value):
-        values = {
-            'Дедлайн': 'deadline_ratio',
-            'Статус': 'status_ratio',
-            'План действий': 'action_plan_ratio',
-
-        }
-        return values.get(value)
 
     def get_queryset(self):
         values = {
@@ -103,7 +94,7 @@ class DocumentDownload(View):
     """
 
     def get(self, request, *args, **kwargs):
-        obj = Document.objects.get(id=kwargs['pk'])
+        obj = get_object_or_404(Document, pk=kwargs['pk'])
         filename = obj.uploaded_file.path
         response = FileResponse(open(filename, 'rb'))
         return response
@@ -117,7 +108,7 @@ class DocumentDelete(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_staff:
             raise PermissionDenied
-        obj = Document.objects.get(id=kwargs['pk'])
+        obj = get_object_or_404(Document, pk=kwargs['pk'])
         path = obj.get_file_path()
         os.remove(path)
         obj.delete()
@@ -130,9 +121,9 @@ class DocumentUpdate(View):
     """
 
     def post(self, request, *args, **kwargs):
-        obj = Document.objects.get(pk=kwargs['pk'])
+        obj = get_object_or_404(Document, pk=kwargs['pk'])
         path = obj.get_file_path()
-        form = DocumentUpdateForm(request.POST, request.FILES, instance=obj)
+        form = DocumentUpdateForm(request.POST, request.FILES, instance=obj, )
 
         if form.is_valid():
             form.save()
