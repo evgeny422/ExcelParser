@@ -1,11 +1,12 @@
 from django.urls import path
 
 from document_manager.views import DocumentsList, DocumentAdd, DocumentSearch, DocumentDetail, DocumentSort, \
-    DocumentDownload, DocumentDelete, DocumentUpdate
+    DocumentDownload, DocumentDelete, DocumentUpdate, DownloadInitialFile
 
 urlpatterns = [
 
     path('', DocumentsList.as_view(), name='documents'),
+    path('download_initial_file/', DownloadInitialFile.as_view(), name='initial_file'),
     path('search/', DocumentSearch.as_view(), name='search'),
     path('add_document/', DocumentAdd.as_view(), name='add_document'),
     path('sort_documents/', DocumentSort.as_view(), name='sorted_documents'),

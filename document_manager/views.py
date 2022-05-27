@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import ListView, DetailView
 
+from ExcelParser.settings import BASE_DIR
 from document_manager.forms import DocumentUpdateForm
 from document_manager.models import Document
 
@@ -145,3 +146,14 @@ class DocumentUpdate(View):
         # obj.save()
 
         return render(request, 'documents/message.html', {'message': 'Введен неверный пароль'})
+
+
+class DownloadInitialFile(View):
+    """
+    Оригинальный файл "Я - как проект"
+    """
+
+    def get(self, request, *args, **kwargs):
+        filename = os.path.join(BASE_DIR, 'initial_excel_files/Журнал_Я_как_проект_ШР21_верная_версия.xlsx')
+        response = FileResponse(open(filename, 'rb'))
+        return response
