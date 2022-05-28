@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '88.214.194.86',]
+ALLOWED_HOSTS = ['127.0.0.1', '88.214.194.86', ]
 
 # Application definition
 
@@ -55,7 +55,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'document_manager.context_proc.formDocUpdate',
+
+                'document_manager.context_proc.document_update_form',
+                'document_manager.context_proc.document_add_form',
+
             ],
         },
     },

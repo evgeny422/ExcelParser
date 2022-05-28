@@ -1,8 +1,14 @@
 import datetime
-import os
 
 from django.core.exceptions import ValidationError
 from openpyxl import load_workbook
+
+
+def str_to_datetime(date_time_str: str):
+    try:
+        return datetime.datetime.strptime(date_time_str, '%d-%m-%Y') - datetime.datetime(2022, 2, 21, 0, 0)
+    except:
+        return datetime.timedelta(days=0)
 
 
 class ParserToDatabase:
@@ -24,7 +30,11 @@ class ParserToDatabase:
         if {'ОБЩИЙ ПЛАН', 'Образование', 'Дело', 'Организация и коллектив', 'Репутация', 'Здоровье',
             'Семья и окружение'} != set(self.sheetlist):
             self.wb.close()
-            self._document.delete()
+            try:
+                self._document.delete()
+            except:
+                pass
+
             raise ValidationError('Нереверный макет файла!')
         return self.sheetlist
 
@@ -43,14 +53,16 @@ class ParserToDatabase:
                         'Задача': {v.value},
                         'Дедлайн': [c.value - datetime.datetime(2022, 2, 21, 0, 0)
                                     if isinstance(c.value, datetime.datetime)
-                                    else datetime.timedelta(days=0)],
+                                    else str_to_datetime(c.value)],
                         'Статус': [i.value]
                     }
                 else:
                     checklist[str(page)]['Задача'].add(v.value)
+                    # print(v.value)
+                    # print(type(c.value) if c.value else None)
                     checklist[str(page)]['Дедлайн'].append(
-                        c.value - datetime.datetime(2022, 2, 21, 0, 0)
-                        if isinstance(c.value, datetime.datetime) else datetime.timedelta(days=0))
+                        c.value - datetime.datetime(2022, 1, 24, 0, 0)
+                        if isinstance(c.value, datetime.datetime) else str_to_datetime(c.value))
                     checklist[str(page)]['Статус'].append(i.value)
 
             checklist[page]['Задача'].discard("' '")

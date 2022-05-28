@@ -101,16 +101,11 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td><a href="{% url 'document' d.pk %}" style="text-decoration:None">{{ d.title }}</a></td>
-                <td>
-                    {{ d.status_ratio }}
-
-
-                </td>
+                <td>{{ d.status_ratio }}</td>
                 <td>{{ d.deadline_ratio }}</td>
                 <td>{{ d.action_plan_ratio }}</td>
                 <td>
-
-
+                            {#  Скачать файл   #}
                     <a title="Скачать" style="padding-right: 2px; text-decoration:None"
                        href="{% url 'download' d.pk %}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -120,7 +115,7 @@
                         </svg>
                     </a>
 
-
+                            {#  Обновить файл#}
                     <a title="Обновить файл" style="padding-right: 2px; text-decoration:None;" data-bs-toggle="modal"
                        data-bs-target="#myModal{{ d.pk }}" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -147,6 +142,8 @@
                                           enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <div>
+
+
                                             {{ formDocUpdate.non_field_errors }}
                                             {{ formDocUpdate.password.errors }}
                                             {{ formDocUpdate.error_messages }}
@@ -170,6 +167,7 @@
                             </div>
                         </div>
                     </div>
+                    {#  Удалить файл ( для админа )   #}
                     {% if request.user.is_staff %}
                         <a title="Удалить файл" href="{% url 'delete' d.pk %}" style="text-decoration:None">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

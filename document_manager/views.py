@@ -4,10 +4,10 @@ from django.core.exceptions import PermissionDenied
 from django.http import FileResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 
 from ExcelParser.settings import BASE_DIR
-from document_manager.forms import DocumentUpdateForm
+from document_manager.forms import DocumentUpdateForm, DocumentForm
 from document_manager.models import Document
 
 
@@ -20,7 +20,8 @@ class DocumentsList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['update_form'] = DocumentUpdateForm()
+        context['update_form'] = DocumentUpdateForm
+
         return context
 
 
@@ -75,17 +76,12 @@ class DocumentAdd(View):
     """
 
     def post(self, request):
-        file = request.FILES.get('File')
-        file_name = request.POST.get('File_title')
-        password = request.POST.get('password')
-        document = Document(
-            title=file_name,
-            uploaded_file=file,
-            password=password,
-        )
-        document.save()
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('documents')
 
-        return redirect('documents')
+        return render(request, 'documents/message.html', {'message': form.errors})
 
 
 class DocumentDownload(View):
@@ -109,8 +105,10 @@ class DocumentDelete(View):
         if not request.user.is_staff:
             raise PermissionDenied
         obj = get_object_or_404(Document, pk=kwargs['pk'])
-        path = obj.get_file_path()
-        os.remove(path)
+        try:
+            os.remove(obj.get_file_path())
+        except:
+            pass
         obj.delete()
         return redirect('documents')
 
@@ -127,16 +125,13 @@ class DocumentUpdate(View):
 
         if form.is_valid():
             form.save()
-            os.remove(path)
+            try:
+                os.remove(path)
+            except:
+                pass
             return redirect('documents')
-        # if obj.password.strip() != request.POST.get('password'):
-        #     raise PermissionDenied
-        # file, file_name = request.FILES.get('uploaded_file'), request.POST.get('title')
-        # obj.title, obj.uploaded_file = file_name, file
-        #
-        # obj.save()
 
-        return render(request, 'documents/message.html', {'message': 'Введен неверный пароль'})
+        return render(request, 'documents/message.html', {'message': form.errors})
 
 
 class DownloadInitialFile(View):

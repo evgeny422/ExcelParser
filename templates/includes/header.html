@@ -27,9 +27,9 @@
             </div>
         </form>
 
-        {#       FAQ     #}
-        <div style="display:flex;">
 
+        <div style="display:flex;">
+                        {#       FAQ     #}
             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal3"
                     style="margin-right: 5px;">
                 FAQ
@@ -87,7 +87,7 @@
                     </div>
                 </div>
             </div>
-
+                    {#          Загрузить файл             #}
             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">
                 Загрузить файл
             </button>
@@ -96,23 +96,24 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
 
-                        <!-- Modal Header -->
+                        <!-- Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">Загрузка нового файла</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <!-- Modal body -->
+                        <!-- body -->
                         <div class="modal-body d-flex">
                             <form class="d-flex" action="{% url 'add_document' %}" method="post"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
+
                                 <div>
                                     <p>Введите имя автора файла (будет отображаться на главной странице)</p>
-                                    <input type="text" name="File_title" placeholder="Название">
+                                    <input type="text" name="title" placeholder="Название">
                                     <p>Придумайте пароль, он будет использован для обновления файла в будущем</p>
                                     <input type="password" name="password" placeholder="Пароль">
-                                    <input type="file" name="File">
+                                    <input type="file" name="uploaded_file">
                                     <div><input type="submit" value="Загрузить" class="btn btn-success" style="margin-top: 3px"></div>
                                 </div>
 
@@ -121,7 +122,7 @@
                             </form>
                         </div>
 
-                        <!-- Modal footer -->
+                        <!-- footer -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
                         </div>
