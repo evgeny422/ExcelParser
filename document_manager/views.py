@@ -1,7 +1,8 @@
+import json
 import os
 
 from django.core.exceptions import PermissionDenied
-from django.http import FileResponse
+from django.http import FileResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
@@ -21,7 +22,6 @@ class DocumentsList(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['update_form'] = DocumentUpdateForm
-
         return context
 
 
@@ -30,7 +30,11 @@ class DocumentDetail(View):
 
     def get(self, request, *args, **kwargs):
         doc = get_object_or_404(Document, pk=kwargs['pk'])
-        return render(request, 'documents/document_detail.html', context={'document': doc})
+        with open(doc.json_file_path) as f:
+            data = json.load(f)
+
+        return render(request, 'documents/document_detail.html',
+                      context={'document': doc, 'data': data})
 
 
 class DocumentSort(ListView):
@@ -129,6 +133,7 @@ class DocumentUpdate(View):
                 os.remove(path)
             except:
                 pass
+
             return redirect('documents')
 
         return render(request, 'documents/message.html', {'message': form.errors})

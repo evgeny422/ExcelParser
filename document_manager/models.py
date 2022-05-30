@@ -6,6 +6,7 @@ from django.utils.timezone import now
 
 from document_manager.services.dataframes_services import ParserToDatabase
 from document_manager.validators import validate_file_extension
+from plot_engine.json_manager import generate_sample, upload_data
 
 
 class DocumentAbstract:
@@ -41,6 +42,7 @@ class Document(DocumentAbstract, models.Model):
     action_plan_ratio = models.IntegerField('План действий', blank=True, null=True)
 
     password = models.CharField('Пароль', max_length=150)
+    json_file_path = models.CharField('json', max_length=250, blank=True)
 
     class Meta:
         verbose_name = 'Документ'
@@ -74,6 +76,14 @@ class Document(DocumentAbstract, models.Model):
         self.action_plan_ratio = pars.get('task', 0)
         self.date_time_of_updated = now()
 
+        if self.json_file_path:
+            self.json_file_path = self.json_file_path
+        else:
+            self.json_file_path = generate_sample()
+
+        upload_data(file=self.json_file_path, time_delta=self.date_time_of_updated.date(),
+                    status_value=self.status_ratio,
+                    deadline_value=self.deadline_ratio // 10, plan_value=self.action_plan_ratio)
         return super(Document, self).save(*args, **kwargs)
 
     def __str__(self):

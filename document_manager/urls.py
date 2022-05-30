@@ -15,4 +15,5 @@ urlpatterns = [
     path('delete/<int:pk>/', DocumentDelete.as_view(), name='delete'),
     path('update/<int:pk>/', DocumentUpdate.as_view(), name='update'),
 
+
 ]

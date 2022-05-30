@@ -7,7 +7,7 @@
         {#              Сортировки          #}
         <form class="d-flex" action="{% url 'search' %}" method="get">
             <input class="form-control mr-2" type="search" placeholder="Название файла" name="q"
-                   aria-label="Search">
+                   aria-label="Search" value="{{ q }}">
             <button type="submit" class="btn btn-outline-dark" type="submit">
                 Поиск
             </button>
