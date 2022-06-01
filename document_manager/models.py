@@ -71,7 +71,7 @@ class Document(DocumentAbstract, models.Model):
             super().save(*args, **kwargs)
         pars = ParserToDatabase(self).get_total_values()
         self.content = 'Content'
-        self.deadline_ratio = pars.get('deadline', 0)
+        self.deadline_ratio = pars.get('deadline', 0)//10
         self.status_ratio = pars.get('status', 0)
         self.action_plan_ratio = pars.get('task', 0)
         self.date_time_of_updated = now()
