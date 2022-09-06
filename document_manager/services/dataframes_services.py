@@ -4,13 +4,6 @@ from django.core.exceptions import ValidationError
 from openpyxl import load_workbook
 
 
-def str_to_datetime(date_time_str: str):
-    try:
-        return datetime.datetime.strptime(date_time_str, '%d-%m-%Y') - datetime.datetime(2022, 2, 21, 0, 0)
-    except:
-        return datetime.timedelta(days=0)
-
-
 class ParserToDatabase:
     """
         Класс для парсинга файлов "Я - как проект"
@@ -21,6 +14,12 @@ class ParserToDatabase:
         self._path = document.get_file_path()
         self.wb = load_workbook(self._path, read_only=True)
         self.sheetlist = self.wb.sheetnames
+        self.event = document.event
+        self.rule = {
+            'day': self.event.day,
+            'month': self.event.month,
+            'year': self.event.year
+        }
 
     def check_sheet(self):
         """
@@ -38,6 +37,15 @@ class ParserToDatabase:
             raise ValidationError('Нереверный макет файла!')
         return self.sheetlist
 
+    def str_to_datetime(self, date_time_str: str):
+        try:
+            return datetime.datetime.strptime(date_time_str, '%d-%m-%Y') - datetime.datetime(self.rule.get('year', 0),
+                                                                                             self.rule.get('month', 0),
+                                                                                             self.rule.get('month', 0),
+                                                                                             0, 0)
+        except:
+            return datetime.timedelta(days=0)
+
     def get_values_by_sheet(self):
         """
         Подсчет очков для каждой страницы
@@ -51,18 +59,22 @@ class ParserToDatabase:
                 if not checklist.get(str(page)):
                     checklist[str(page)] = {
                         'Задача': {v.value},
-                        'Дедлайн': [c.value - datetime.datetime(2022, 2, 21, 0, 0)
+                        'Дедлайн': [c.value - datetime.datetime(self.rule.get('year', 0),
+                                                                self.rule.get('month', 0),
+                                                                self.rule.get('month', 0),
+                                                                0, 0)
                                     if isinstance(c.value, datetime.datetime)
-                                    else str_to_datetime(c.value)],
+                                    else self.str_to_datetime(c.value)],
                         'Статус': [i.value]
                     }
                 else:
                     checklist[str(page)]['Задача'].add(v.value)
-                    # print(v.value)
-                    # print(type(c.value) if c.value else None)
                     checklist[str(page)]['Дедлайн'].append(
-                        c.value - datetime.datetime(2022, 1, 24, 0, 0)
-                        if isinstance(c.value, datetime.datetime) else str_to_datetime(c.value))
+                        c.value - datetime.datetime(self.rule.get('year', 0),
+                                                    self.rule.get('month', 0),
+                                                    self.rule.get('month', 0),
+                                                    0, 0)
+                        if isinstance(c.value, datetime.datetime) else self.str_to_datetime(c.value))
                     checklist[str(page)]['Статус'].append(i.value)
 
             checklist[page]['Задача'].discard("' '")

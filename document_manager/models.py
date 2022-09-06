@@ -27,6 +27,26 @@ class DocumentAbstract:
         pass
 
 
+class Event(models.Model):
+    """
+    Событие - начало подстчета баллов
+    """
+    title = models.CharField('Название мероприятия', max_length=150)
+
+    outdated = models.BooleanField('Активно')
+
+    day = models.PositiveSmallIntegerField('День')
+    month = models.PositiveSmallIntegerField('Месяц')
+    year = models.PositiveSmallIntegerField('Год')
+
+    class Meta:
+        verbose_name = 'Событие'
+        verbose_name_plural = 'Событие'
+
+    def __str__(self):
+        return f'{self.title}'
+
+
 class Document(DocumentAbstract, models.Model):
     """
     Модель документа
@@ -43,6 +63,8 @@ class Document(DocumentAbstract, models.Model):
 
     password = models.CharField('Пароль', max_length=150)
     json_file_path = models.CharField('json', max_length=250, blank=True)
+
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = 'Документ'
@@ -71,19 +93,23 @@ class Document(DocumentAbstract, models.Model):
             super().save(*args, **kwargs)
         pars = ParserToDatabase(self).get_total_values()
         self.content = 'Content'
-        self.deadline_ratio = pars.get('deadline', 0)
+        self.deadline_ratio = pars.get('deadline', 0) // 10
         self.status_ratio = pars.get('status', 0)
         self.action_plan_ratio = pars.get('task', 0)
         self.date_time_of_updated = now()
-
         if self.json_file_path:
             self.json_file_path = self.json_file_path
         else:
             self.json_file_path = generate_sample()
 
-        upload_data(file=self.json_file_path, time_delta=self.date_time_of_updated.date(),
-                    status_value=self.status_ratio,
-                    deadline_value=self.deadline_ratio // 10, plan_value=self.action_plan_ratio)
+        upload_data(
+            file=self.json_file_path,
+            time_delta=self.date_time_of_updated.date(),
+            status_value=self.status_ratio,
+            deadline_value=self.deadline_ratio // 10,
+            plan_value=self.action_plan_ratio
+        )
+
         return super(Document, self).save(*args, **kwargs)
 
     def __str__(self):

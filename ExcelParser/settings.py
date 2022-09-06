@@ -58,6 +58,9 @@ TEMPLATES = [
 
                 'document_manager.context_proc.document_update_form',
                 'document_manager.context_proc.document_add_form',
+                'document_manager.context_proc.get_categories',
+
+
 
             ],
         },

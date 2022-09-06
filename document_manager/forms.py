@@ -7,19 +7,18 @@ from document_manager.models import Document
 class DocumentForm(ModelForm):
     class Meta:
         model = Document
-        fields = ('title', 'password', 'uploaded_file',)
+        fields = ('title', 'password', 'uploaded_file', 'event')
         widgets = {'password': PasswordInput, }
 
 
 class DocumentUpdateForm(ModelForm):
     class Meta:
         model = Document
-        fields = ('title', 'password', 'uploaded_file',)
+        fields = ('title', 'password', 'uploaded_file', 'event')
         widgets = {'password': PasswordInput, }
 
     def clean_password(self):
         password = self.cleaned_data['password']
-        print(self.instance)
         if self.instance and self.instance.password != password:
             raise ValidationError('Неверный пароль')
 

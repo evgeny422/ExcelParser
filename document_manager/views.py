@@ -3,7 +3,7 @@ import os
 
 from django.core.exceptions import PermissionDenied
 from django.http import FileResponse, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.views import View
 from django.views.generic import ListView
 
@@ -16,7 +16,7 @@ class DocumentsList(ListView):
     """ Список всех имеющихся документов """
 
     model = Document
-    queryset = Document.objects.values('pk', 'title', 'deadline_ratio', 'status_ratio', 'action_plan_ratio')
+    queryset = Document.objects.filter(event__outdated=True).values('pk', 'title', 'deadline_ratio', 'status_ratio', 'action_plan_ratio')
     template_name = 'documents/document_list.html'
 
     def get_context_data(self, *args, **kwargs):
@@ -31,10 +31,18 @@ class DocumentDetail(View):
     def get(self, request, *args, **kwargs):
         doc = get_object_or_404(Document, pk=kwargs['pk'])
         with open(doc.json_file_path) as f:
-            data = json.load(f)
+            data = json.load(f, )
 
         return render(request, 'documents/document_detail.html',
                       context={'document': doc, 'data': data})
+
+
+class DocumentFromEvent(View):
+    """Документы в зависимости от события"""
+
+    def get(self, request, *args, **kwargs):
+        document_list = Document.objects.filter(event=kwargs['pk'])
+        return render(request, 'documents/document_list.html', context={'document_list': document_list})
 
 
 class DocumentSort(ListView):
@@ -136,7 +144,7 @@ class DocumentUpdate(View):
 
             return redirect('documents')
 
-        return render(request, 'documents/message.html', {'message': form.errors})
+        # return render(request, 'documents/message.html', {'message': form.errors})
 
 
 class DownloadInitialFile(View):
@@ -146,5 +154,4 @@ class DownloadInitialFile(View):
 
     def get(self, request, *args, **kwargs):
         filename = os.path.join(BASE_DIR, 'initial_excel_files/Журнал_Я_как_проект_ШР21_верная_версия.xlsx')
-        response = FileResponse(open(filename, 'rb'))
-        return response
+        return FileResponse(open(filename, 'rb'))

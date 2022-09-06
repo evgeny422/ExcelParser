@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.forms import ModelForm, CharField
 
-from document_manager.models import Document
+from document_manager.models import Document, Event
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
@@ -20,3 +20,11 @@ class DocumentAdminModel(admin.ModelAdmin):
     search_fields = ['date_time_of_added', 'title', ]
     ordering_fields = ('pk', 'title')
     #form = DocumentAdminForm
+
+@admin.register(Event)
+class DocumentAdminModel(admin.ModelAdmin):
+    list_display = ('pk', 'title',"outdated")
+    list_display_links = ('pk', 'title')
+    search_fields = ['title', ]
+    ordering_fields = ('pk', 'title')
+    list_editable = ["outdated"]

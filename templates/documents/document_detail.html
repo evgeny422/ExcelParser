@@ -37,22 +37,21 @@
             bindto: '#chart',
 
             data: {
-                x: 'x',
+
                 columns: [
-                    vf['x'],
+
                     vf['y1'],
                     vf['y2'],
                     vf['y3'],
-                ]
-            },
-            axis: {
-                x: {
-                    type: 'timeseries',
-                    tick: {
-                        format: '%Y-%m-%d'
-                    }
+                ],
+
+                types: {
+                    "Статус":"bar",
+                    "Дедлайн":"bar",
+                    "План":"bar",
                 }
-            }
+            },
+
         });
 
     </script>
