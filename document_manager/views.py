@@ -2,21 +2,23 @@ import json
 import os
 
 from django.core.exceptions import PermissionDenied
-from django.http import FileResponse, JsonResponse
+from django.http import FileResponse, JsonResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.views import View
 from django.views.generic import ListView
 
 from ExcelParser.settings import BASE_DIR
 from document_manager.forms import DocumentUpdateForm, DocumentForm
-from document_manager.models import Document
+from document_manager.models import Document, Event
 
 
 class DocumentsList(ListView):
     """ Список всех имеющихся документов """
 
     model = Document
-    queryset = Document.objects.filter(event__outdated=True).values('pk', 'title', 'deadline_ratio', 'status_ratio', 'action_plan_ratio')
+    event = Event.objects.filter(outdated=True)
+    queryset = Document.objects.filter(event__current=True).values('pk', 'title', 'deadline_ratio', 'status_ratio',
+                                                                   'action_plan_ratio')
     template_name = 'documents/document_list.html'
 
     def get_context_data(self, *args, **kwargs):
@@ -41,8 +43,59 @@ class DocumentFromEvent(View):
     """Документы в зависимости от события"""
 
     def get(self, request, *args, **kwargs):
-        document_list = Document.objects.filter(event=kwargs['pk'])
-        return render(request, 'documents/document_list.html', context={'document_list': document_list})
+        event = Event.objects.get(title=kwargs['slug'])
+        if event.outdated:
+            document_list = Document.objects.filter(event=event.pk)
+            return render(request, template_name='documents/document_event_list.html', context={
+                'document_list': document_list,
+                'event_name': event.title
+            })
+        else:
+            raise Http404
+
+
+class DocumentEventSort(View):
+    """Сортировка документов по ключу, где ключ - столбец в файле"""
+
+    template_name = 'documents/document_list.html'
+
+    def get(self, request, *args, **kwargs):
+        print(kwargs)
+        values = {
+            'Дедлайн': 'deadline_ratio',
+            'Статус': 'status_ratio',
+            'План действий': 'action_plan_ratio',
+        }
+        key = self.request.GET.get("orderby").strip()
+        if key in values.keys():
+            key = values.get(key)
+
+        document_list = Document.objects.filter(event__title=kwargs['slug']).order_by(key)
+        event = Event.objects.get(title=kwargs['slug'])
+        return render(request, template_name='documents/document_event_list.html', context={
+            'document_list': document_list,
+            'event_name': event.title
+        })
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["key"] = self.request.GET.get("key")
+        return context
+
+
+class DocumentEventSearch(View):
+    """Поиск документов конкретного события"""
+
+    def get(self, request, *args, **kwargs):
+        document_list = Document.objects.filter(
+            title__icontains=self.request.GET.get("q").strip(),
+            event__outdated=True
+        )
+        event = Event.objects.get(title=kwargs.get('slug'))
+        return render(request, template_name='documents/document_event_list.html', context={
+            'document_list': document_list,
+            'event_name': event.title
+        })
 
 
 class DocumentSort(ListView):
@@ -55,7 +108,6 @@ class DocumentSort(ListView):
             'Дедлайн': 'deadline_ratio',
             'Статус': 'status_ratio',
             'План действий': 'action_plan_ratio',
-
         }
         key = self.request.GET.get("orderby").strip()
         if key in values.keys():
@@ -74,7 +126,8 @@ class DocumentSearch(ListView):
     template_name = 'documents/document_list.html'
 
     def get_queryset(self):
-        return Document.objects.filter(title__icontains=self.request.GET.get("q").strip())
+        return Document.objects.filter(title__icontains=self.request.GET.get("q").strip(),
+                                       event__outdated=True)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

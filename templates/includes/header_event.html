@@ -1,20 +1,22 @@
 <nav class="navbar bg-light">
     <div class="container-fluid py-1">
         <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton2"
                     data-bs-toggle="dropdown" aria-expanded="false">
                 Выберите проект
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                 {% for i in events %}
-                    <li><a class="dropdown-item" type="submit" href="{% url 'documents_event_slug' i.title %}">{{ i.title }}</a>
-                    </li>
+                <li><a class="dropdown-item" type="submit" href="{% url 'documents_event_slug' i.title %}">
+                    {{ i.title }}
+                </a>
+                </li>
                 {% endfor %}
             </ul>
         </div>
 
-        {#              Сортировки          #}
-        <form class="d-flex" action="{% url 'search' %}" method="get">
+        {# Сортировки #}
+        <form class="d-flex" action="{% url 'document_event_search' event_name %}" method="get">
             <input class="form-control mr-2" type="search" placeholder="Название файла" name="q"
                    aria-label="Search" value="{{ q }}">
             <button type="submit" class="btn btn-outline-dark" type="submit">
@@ -22,7 +24,7 @@
             </button>
         </form>
 
-        <form class="d-flex" action="{% url 'sorted_documents' %}" method="get">
+        <form class="d-flex" action="{% url 'document_event_sort' event_name %}" method="get">
             <div class="dropdown">
                 <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,7 +40,7 @@
 
 
         <div style="display:flex;">
-            {#       FAQ     #}
+            {# FAQ #}
             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal3"
                     style="margin-right: 5px;">
                 FAQ
@@ -106,7 +108,7 @@
                     </div>
                 </div>
             </div>
-            {#          Загрузить файл             #}
+            {# Загрузить файл #}
             <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">
                 Загрузить файл
             </button>
@@ -134,12 +136,13 @@
                                     <input type="password" name="password" class="form-control" placeholder="Пароль">
                                     <input type="file" name="uploaded_file" class="form-control">
                                     <div class="mt-1">
-                                        <label for="event"><span class="text-danger">ВАЖНО!</span> Выберите соответствующее мерпориятие</label>
+                                        <label for="event"><span class="text-danger">ВАЖНО!</span> Выберите
+                                            соответствующее мерпориятие</label>
                                         <select name="event" id="event" required class="form-control">
-                                        {% for i in events %}
+                                            {% for i in events %}
                                             <option value="{{ i.pk }}">{{ i.title }}</option>
-                                        {% endfor %}
-                                    </select>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                     <div><input type="submit" value="Загрузить" class="btn btn-success"
                                                 style="margin-top: 3px"></div>

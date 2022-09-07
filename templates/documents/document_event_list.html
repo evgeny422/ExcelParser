@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'main.html' %}
 
+{% block content %}
 <div class="table-responsive">
     <table class="table table-hover">
             <thead>
@@ -11,7 +11,7 @@
                     <div class="d-flex">
                         <span>Рейтинг по статусу</span>
                         <form class="d-flex"
-                              action="{%  url 'sorted_documents' %}"
+                              action="{% url 'document_event_sort' event_name %}"
                               method="get"
                               style="display: none;">
                             <div>
@@ -42,7 +42,7 @@
 
                     <div class="d-flex">
                         <span>Рейтинг по дедлайну</span>
-                        <form class="d-flex" action="{% url 'sorted_documents' %}" method="get" style="display: none;">
+                        <form class="d-flex" action="{% url 'document_event_sort' event_name %}" method="get" style="display: none;">
                             <div>
                                 <label>
                                     <input type="submit" style="display: none;" name="orderby" value="-deadline_ratio"/>
@@ -71,7 +71,7 @@
 
                     <div class="d-flex">
                         <span>Рейтинг по составленному плану</span>
-                        <form class="d-flex" action="{% url 'sorted_documents' %}" method="get" style="display: none;">
+                        <form class="d-flex" action="{% url 'document_event_sort' event_name %}" method="get" style="display: none;">
                             <div>
                                 <label>
                                     <input type="submit" style="display: none;" name="orderby" value="-action_plan_ratio"/>
@@ -186,6 +186,4 @@
             </tbody>
         </table>
 </div>
-
-
 {% endblock content %}

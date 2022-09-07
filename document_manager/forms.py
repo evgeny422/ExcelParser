@@ -28,6 +28,7 @@ class DocumentUpdateForm(ModelForm):
         if self.instance:
             self.instance.uploaded_file = self.cleaned_data['uploaded_file']
             self.instance.title = self.cleaned_data['title']
+            self.instance.event = self.cleaned_data['event']
             self.instance.save()
             return self.instance
         return super(DocumentUpdateForm, self).save(commit=True)

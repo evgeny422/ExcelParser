@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'event_document/main.html' %}
 {% block content %}
 
 <div class="table-responsive">
@@ -10,10 +10,7 @@
                 <th scope="col">
                     <div class="d-flex">
                         <span>Рейтинг по статусу</span>
-                        <form class="d-flex"
-                              action="{%  url 'sorted_documents' %}"
-                              method="get"
-                              style="display: none;">
+                        <form class="d-flex" action="{% url 'sorted_documents' %}" method="get" style="display: none;">
                             <div>
                                 <label>
                                     <input type="submit" style="display: none;" name="orderby" value="-status_ratio"/>
