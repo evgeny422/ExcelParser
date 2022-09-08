@@ -105,7 +105,7 @@ class ParserToDatabase:
 
         for key in values.keys():
             for k, v in values.get(key)['statuses'].items():
-                counter += points.get(k) * v
+                counter += points.get(k, 0) * v
         return counter
 
     def get_total_values(self):
