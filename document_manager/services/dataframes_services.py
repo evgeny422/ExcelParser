@@ -9,6 +9,9 @@ class ParserToDatabase:
         Класс для парсинга файлов "Я - как проект"
     """
 
+    _sheetlists_rules = {'ОБЩИЙ ПЛАН', 'Образование', 'Дело', 'Организация и коллектив', 'Репутация', 'Здоровье',
+                         'Семья и окружение'}
+
     def __init__(self, document):
         self._document = document
         self._path = document.get_file_path()
@@ -26,8 +29,10 @@ class ParserToDatabase:
         Валидация файла по имеющимся листам
         """
 
-        if {'ОБЩИЙ ПЛАН', 'Образование', 'Дело', 'Организация и коллектив', 'Репутация', 'Здоровье',
-            'Семья и окружение'} != set(self.sheetlist):
+        if set(self.sheetlist).intersection(self._sheetlists_rules) != {'ОБЩИЙ ПЛАН', 'Образование', 'Дело',
+                                                                        'Организация и коллектив', 'Репутация',
+                                                                        'Здоровье',
+                                                                        'Семья и окружение'}:
             self.wb.close()
             try:
                 self._document.delete()
@@ -53,7 +58,9 @@ class ParserToDatabase:
 
         checklist = {}
         result = {}
-        for page in self.check_sheet()[1:]:
+        page_variant = -1 if 'Файлы' in self.sheetlist else len(self.sheetlist)
+        print(page_variant, self.sheetlist)
+        for page in self.check_sheet()[1:page_variant]:
             for v, _, _, _, _, _, c, i in self.wb[page]['H37':'O56']:
 
                 if not checklist.get(str(page)):
