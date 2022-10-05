@@ -104,6 +104,7 @@ class Document(DocumentAbstract, models.Model):
             self.action_plan_ratio = pars.get('task', 0)
             self.date_time_of_updated = now()
         except:
+            self.delete()
             raise FieldError('Некорректный файл')
 
         if self.json_file_path:
