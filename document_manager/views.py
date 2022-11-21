@@ -8,6 +8,7 @@ from django.views import View
 from django.views.generic import ListView
 
 from ExcelParser.settings import BASE_DIR
+from ExcelParser.settings_dev import INITIAL_FILE_PATH_
 from document_manager.forms import DocumentUpdateForm, DocumentForm
 from document_manager.models import Document, Event
 
@@ -206,5 +207,5 @@ class DownloadInitialFile(View):
     """
 
     def get(self, request, *args, **kwargs):
-        filename = os.path.join(BASE_DIR, 'initial_excel_files/Журнал_Я_как_проект_ШР21_верная_версия.xlsx')
+        filename = INITIAL_FILE_PATH_
         return FileResponse(open(filename, 'rb'))
