@@ -2,12 +2,11 @@ import json
 import os
 
 from django.core.exceptions import PermissionDenied
-from django.http import FileResponse, JsonResponse, Http404
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.http import FileResponse, Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
 
-from ExcelParser.settings import BASE_DIR
 from ExcelParser.settings_dev import INITIAL_FILE_PATH_
 from document_manager.forms import DocumentUpdateForm, DocumentForm
 from document_manager.models import Document, Event
@@ -114,7 +113,7 @@ class DocumentSort(ListView):
         if key in values.keys():
             key = values.get(key)
 
-        return Document.objects.order_by(key)
+        return Document.objects.filter(event__outdated=True).order_by(key)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
