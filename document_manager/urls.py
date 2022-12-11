@@ -2,7 +2,7 @@ from django.urls import path
 
 from document_manager.views import DocumentsList, DocumentAdd, DocumentSearch, DocumentDetail, DocumentSort, \
     DocumentDownload, DocumentDelete, DocumentUpdate, DownloadInitialFile, DocumentFromEvent, DocumentEventSort, \
-    DocumentEventSearch
+    DocumentEventSearch, DocumentHistory
 
 urlpatterns = [
 
@@ -16,9 +16,12 @@ urlpatterns = [
     path('event/<str:slug>/sort', DocumentEventSort.as_view(), name='document_event_sort'),
     path('event/<str:slug>/search', DocumentEventSearch.as_view(), name='document_event_search'),
 
+path('history/', DocumentHistory.as_view(), name='documents_history'),
+
     path('doc/<int:pk>/', DocumentDetail.as_view(), name='document'),
     path('download/<int:pk>/', DocumentDownload.as_view(), name='download'),
     path('delete/<int:pk>/', DocumentDelete.as_view(), name='delete'),
     path('update/<int:pk>/', DocumentUpdate.as_view(), name='update'),
 
 ]
+

@@ -3,7 +3,7 @@ import os
 
 from django.core.exceptions import PermissionDenied
 from django.http import FileResponse, Http404
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.views import View
 from django.views.generic import ListView
 
@@ -208,3 +208,16 @@ class DownloadInitialFile(View):
     def get(self, request, *args, **kwargs):
         filename = INITIAL_FILE_PATH_
         return FileResponse(open(filename, 'rb'))
+
+
+class DocumentHistory(View):
+    """
+    Отображение истории добаления файлов по мероприятиям
+    """
+
+    def get(self, request, *args, **kwargs):
+        event = get_list_or_404(Event)
+
+        return render(request, template_name='documents/document_history.html', context={
+            'events': event
+        })
