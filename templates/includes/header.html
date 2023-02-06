@@ -1,169 +1,156 @@
-<nav class="navbar bg-light">
-    <div class="container-fluid py-1">
-        <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                Выберите проект
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                {% for i in events %}
-                    <li><a class="dropdown-item" type="submit" href="{% url 'documents_event_slug' i.title %}">{{ i.title }}</a>
-                    </li>
-                {% endfor %}
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white pt-0 pb-0">
+    <div class="container container-header">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'icons/logo.svg' %}" alt="" width="51" height="51">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse h-100" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0 h-100">
+                <li class="navbar-btn dropdown">
+                    <a class="navbar-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Диплом 2023
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex me-auto">
+                <button class="navbar-link search-btn" type="submit">Поиск</button>
+                <input class="search-input" type="search" aria-label="Search">
+            </form>
+            <ul class="navbar-nav mb-2 mb-lg-0 h-100">
+                <li class="navbar-btn">
+                    <a class="navbar-link" href="{% url 'documents_history' %}" tabindex="-1" aria-disabled="true">История
+                        проектов</a>
+                </li>
+                <li class="navbar-btn">
+                    <a class="navbar-link" href="#" data-bs-toggle="modal" data-bs-target="#faqModal">FAQ</a>
+                </li>
+                <li class="m-auto">
+                    <a class="btn-common" href="#" tabindex="-1" aria-disabled="true">Создать проект</a>
+                </li>
             </ul>
         </div>
-
-        {#              Сортировки          #}
-        <form class="d-flex" action="{% url 'search' %}" method="get">
-            <input class="form-control mr-2" type="search" placeholder="Название файла" name="q"
-                   aria-label="Search" value="{{ q }}">
-            <button type="submit" class="btn btn-outline-dark" type="submit">
-                Поиск
-            </button>
-        </form>
-
-        <form class="d-flex" action="{% url 'sorted_documents' %}" method="get">
-            <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                    Сортировка по
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><input class="dropdown-item" type="submit" name="orderby" value="Дедлайн"></li>
-                    <li><input class="dropdown-item" type="submit" name="orderby" value="Статус"></li>
-                    <li><input class="dropdown-item" type="submit" name="orderby" value="План действий"></li>
-                </ul>
-            </div>
-        </form>
-
-
-        <div style="display:flex;">
-            <a type="button" class="btn btn-outline-dark me-1" href="{% url 'documents_history' %}">
-                История
-            </a>
-            {#       FAQ     #}
-            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal3"
-                    style="margin-right: 5px;">
-                FAQ
-            </button>
-            <div class="modal fade" id="myModal3">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Доброго времени суток!</h4>
-
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div class="modal-body d-box">
-                            <div>
-                                <p>
-                                    Если вы читаете эту страницу, значит вы имеете отношение к Школе Ректоров и Вам
-                                    предстоит заполнять журнал «Я как проект»
-                                    (оригинал документа доступен для скачивания <a
-                                        href="{% url 'initial_file' %}">ТУТ</a>). Важно: это мощный инструмент для
-                                    личной мотивации и развития self-skills,
-                                    который позволит Вам успешно провезти процесс трансформации, который вы задумали, и
-                                    конечно изменится самому. Этот сервис позволит
-                                    Вам отслеживать свой процесс трансформации, а также Ваших коллег. Мы считаем самыми
-                                    важными показателями успешности вашей трансформации
-                                    количество успешно выполненных задач (рейтинг по статусу), временной интервал
-                                    поставленных задач (рейтинг по дедлайну), общее количество поставленных задач
-                                    (рейтинг по плану). Для корректного подсчета рейтинга, необходимо использовать
-                                    оригинальный файл «Я как проект», загружая файл, Вы несете полную ответственность
-                                    по передачи и распространению приватной информации третьим лицам. Удачи и успехов в
-                                    Вашем проекте трансформации.
-                                </p>
-                            </div>
-                            <div>
-                                <h4>Правила подсчета рейтинга</h4>
-                                <h5>Рейтинг по статусу.</h5>
-                                <p>Считается суммарное значение баллов, в соответствии со значениями присланного файла и
-                                    статусом всех задач (Выполнено - 2 балла, В процессе - 1 балл, Не начато - 0
-                                    бал). </p>
-
-                            </div>
-                            <div>
-                                <h5>Рейтинг по дедлайну.</h5>
-                                <p>Считается суммарный временной интервал для всех задач со сроком выполнения от
-                                    24.01.2022 (начало обучения Школы ректоров 21). Для нормировки и корректного
-                                    отображения графиков
-                                    мы приводим результат целочисленного деления на 10.</p>
-                            </div>
-
-                            <div>
-                                <h5>Рейтинг по плану.</h5>
-                                <p>Определяется размером списка задач (общее количество задач по всем разделам). </p>
-                            </div>
-
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            {#          Загрузить файл             #}
-            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">
-                Загрузить файл
-            </button>
-
-            <div class="modal fade" id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <!-- Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Загрузка нового файла</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- body -->
-                        <div class="modal-body d-flex">
-                            <form class="d-flex" action="{% url 'add_document' %}" method="post"
-                                  enctype="multipart/form-data">
-                                {% csrf_token %}
-
-                                <div>
-                                    <p>Введите имя автора файла (будет отображаться на главной странице)</p>
-                                    <input type="text" class="form-control" name="title" placeholder="Название">
-                                    <p>Придумайте пароль, он будет использован для обновления файла в будущем</p>
-                                    <input type="password" name="password" class="form-control" placeholder="Пароль">
-                                    <input type="file" name="uploaded_file" class="form-control">
-                                    <div class="mt-1">
-                                        <label for="event"><span class="text-danger">ВАЖНО!</span> Выберите соответствующее мерпориятие</label>
-                                        <select name="event" id="event" required class="form-control">
-                                        {% for i in events %}
-                                            <option value="{{ i.pk }}">{{ i.title }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    </div>
-                                    <div><input type="submit" value="Загрузить" class="btn btn-success"
-                                                style="margin-top: 3px"></div>
-
-                                </div>
-
-
-                            </form>
-                        </div>
-
-                        <!-- footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
     </div>
 </nav>
+
+{% include 'includes/modals/faq_modal.html' %}
+
+
+{#<nav class="navbar bg-light">#}
+{#    <div class="container-fluid py-1">#}
+{#        <div class="dropdown">#}
+{#            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"#}
+{#                    data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                Выберите проект#}
+{#            </button>#}
+{#            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">#}
+{#                {% for i in events %}#}
+{#                    <li><a class="dropdown-item" type="submit" href="{% url 'documents_event_slug' i.title %}">{{ i.title }}</a>#}
+{#                    </li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        </div>#}
+{##}
+{#              Сортировки          #}
+{#        <form class="d-flex" action="{% url 'search' %}" method="get">#}
+{#            <input class="form-control mr-2" type="search" placeholder="Название файла" name="q"#}
+{#                   aria-label="Search" value="{{ q }}">#}
+{#            <button type="submit" class="btn btn-outline-dark" type="submit">#}
+{#                Поиск#}
+{#            </button>#}
+{#        </form>#}
+{##}
+{#        <form class="d-flex" action="{% url 'sorted_documents' %}" method="get">#}
+{#            <div class="dropdown">#}
+{#                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"#}
+{#                        data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                    Сортировка по#}
+{#                </button>#}
+{#                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">#}
+{#                    <li><input class="dropdown-item" type="submit" name="orderby" value="Дедлайн"></li>#}
+{#                    <li><input class="dropdown-item" type="submit" name="orderby" value="Статус"></li>#}
+{#                    <li><input class="dropdown-item" type="submit" name="orderby" value="План действий"></li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </form>#}
+{##}
+{##}
+{#        <div style="display:flex;">#}
+{#            <a type="button" class="btn btn-outline-dark me-1" href="{% url 'documents_history' %}">#}
+{#                История#}
+{#            </a>#}
+{#       FAQ     #}
+{#            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal3"#}
+{#                    style="margin-right: 5px;">#}
+{#                FAQ#}
+{#            </button>#}
+{#Загрузить файл#}
+{#<button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">#}
+{#    Загрузить файл#}
+{#</button>#}
+{##}
+{#            <div class="modal fade" id="myModal">#}
+{#                <div class="modal-dialog">#}
+{#                    <div class="modal-content">#}
+{##}
+{#                        <!-- Header -->#}
+{#                        <div class="modal-header">#}
+{#                            <h4 class="modal-title">Загрузка нового файла</h4>#}
+{#                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>#}
+{#                        </div>#}
+{##}
+{#                        <!-- body -->#}
+{#                        <div class="modal-body d-flex">#}
+{#                            <form class="d-flex" action="{% url 'add_document' %}" method="post"#}
+{#                                  enctype="multipart/form-data">#}
+{#                                {% csrf_token %}#}
+{##}
+{#                                <div>#}
+{#                                    <p>Введите имя автора файла (будет отображаться на главной странице)</p>#}
+{#                                    <input type="text" class="form-control" name="title" placeholder="Название">#}
+{#                                    <p>Придумайте пароль, он будет использован для обновления файла в будущем</p>#}
+{#                                    <input type="password" name="password" class="form-control" placeholder="Пароль">#}
+{#                                    <input type="file" name="uploaded_file" class="form-control">#}
+{#                                    <div class="mt-1">#}
+{#                                        <label for="event"><span class="text-danger">ВАЖНО!</span> Выберите соответствующее мерпориятие</label>#}
+{#                                        <select name="event" id="event" required class="form-control">#}
+{#                                        {% for i in events %}#}
+{#                                            <option value="{{ i.pk }}">{{ i.title }}</option>#}
+{#                                        {% endfor %}#}
+{#                                    </select>#}
+{#                                    </div>#}
+{#                                    <div><input type="submit" value="Загрузить" class="btn btn-success"#}
+{#                                                style="margin-top: 3px"></div>#}
+{##}
+{#                                </div>#}
+{##}
+{##}
+{#                            </form>#}
+{#                        </div>#}
+{##}
+{#                        <!-- footer -->#}
+{#                        <div class="modal-footer">#}
+{#                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>#}
+{#                        </div>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{##}
+{#        </div>#}
+{##}
+{#    </div>#}
+{#</nav>#}
