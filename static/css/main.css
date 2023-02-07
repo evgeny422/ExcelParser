@@ -4,6 +4,12 @@
 /* Header styles */
 @import "header.css";
 
+/* Form styles */
+@import "forms.css";
+
+/*Modal styles*/
+@import "modals.css";
+
 
 html {
     font-family: "InterSemiBold";
@@ -24,23 +30,4 @@ body {
 .btn-common:hover {
     background: #b1800a;
     color: white;
-}
-
-/* Modal styles */
-
-.faq-modal {
-    max-width: 850px;
-}
-
-.btn-common-outline {
-    letter-spacing: 0.1em;
-    font-size: 18px;
-    line-height: 22px;
-    border: 2px solid #725000;
-    border-radius: 24px;
-    color: #725000;
-    width: 124px;
-    height: 48px;
-    background: white;
-    font-weight: 500;
 }

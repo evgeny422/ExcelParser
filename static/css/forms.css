@@ -1,0 +1,105 @@
+.input-text {
+    border-radius: 24px;
+    border: 2px solid #FDB412;
+    outline: none;
+    font-size: 16px;
+    padding: 5px 14px;
+    margin: 0;
+    width: 100%;
+    color: #725000;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.input-select {
+    border-radius: 24px;
+    border: 2px solid #FDB412;
+    outline: none;
+    font-size: 16px;
+    padding: 7px 8px;
+    margin: 0;
+    width: 100%;
+    background: white;
+    color: #725000;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+}
+
+.input-select option {
+    color: #725000;
+    font-weight: 500;
+    background: #F4F4FC;
+}
+
+.require-budge {
+    color: red;
+    margin-left: 2px;
+}
+
+.input-file {
+    border-radius: 24px;
+    background: #FDB412;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.07em;
+}
+
+.input-file:hover {
+    background: #b1800a;
+    color: white;
+}
+
+.input-file input[type=file] {
+    display: none;
+}
+
+.input-file-name {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.07em;
+    color: rgba(0, 0, 0, 0.55);
+    margin-left: 10px;
+}
+
+.form-label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.07em;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.form-label-indent {
+    margin-left: 14px;
+}
+
+.input-file, .input-select, .input-text {
+    margin-bottom: 20px;
+}
+
+.help-text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.07em;
+    color: #555555;
+}
+
+.btn-submit {
+    letter-spacing: 0.07em;
+    font-size: 16px;
+    line-height: 22px;
+    border-radius: 24px;
+    color: white;
+    padding: 10px 13px;
+    border: 2px solid #55A049;
+    background: #55A049;;
+    font-weight: 500;
+}

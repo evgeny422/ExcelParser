@@ -49,3 +49,15 @@
     font-family: "InterMedium", serif;
 }
 
+.c-title {
+    color: #725000;
+}
+
+.c-link {
+    color: #FDB412;
+}
+
+.c-subtitle {
+    color: rgba(0, 0, 0, 0.55);
+}
+

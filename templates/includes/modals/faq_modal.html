@@ -1,12 +1,12 @@
-<div class="modal fade" id="faqModal">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered faq-modal">
+<div class="modal fade faq-modal" id="faqModal">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered faq-modal-content">
         <div class="modal-content">
             <!-- Modal body -->
             <div class="modal-body d-box">
-                <div class="btn-group w-100">
-                    <button type="button" class="ms-auto btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <h3 class="modal-title text-center font-extra-bold" style="margin-bottom: 40px;">Доброго времени суток!</h3>
+{#                <div class="btn-group w-100">#}
+{#                    <button type="button" class="ms-auto btn-close" data-bs-dismiss="modal"></button>#}
+{#                </div>#}
+                <h3 class="modal-title text-center font-extra-bold c-title" style="margin-bottom: 40px;">Доброго времени суток!</h3>
                 <div style="margin-bottom: 40px;">
                     <p>
                         Если вы читаете эту страницу, значит вы имеете отношение к Школе Ректоров и Вам предстоит
@@ -23,11 +23,11 @@
                         по передачи ираспространению приватной информации третьим лицам. Удачи и успехов в Вашем проекте
                         трансформации.
                     </p>
-                    <a href="{% url 'initial_file' %}">Скачать оригинальный файл «Я как проект»</a>
+                    <a class="c-link" href="{% url 'initial_file' %}">Скачать оригинальный файл «Я как проект»</a>
                 </div>
                 <div>
-                    <h4 class="text-center font-extra-bold" style="margin-bottom: 40px;">Правила подсчета рейтинга</h4>
-                    <h5 class="font-extra-bold">Рейтинг по статусу.</h5>
+                    <h4 class="text-center font-extra-bold c-title" style="margin-bottom: 40px;">Правила подсчета рейтинга</h4>
+                    <h5 class="font-extra-bold c-subtitle">Рейтинг по статусу.</h5>
                     <p>
                         Считается суммарное значение баллов, в соответствии со значениями присланного файла и статусом
                         всех задач:
@@ -38,14 +38,14 @@
                     </p>
                 </div>
                 <div>
-                    <h5 class="font-extra-bold">Рейтинг по дедлайну.</h5>
+                    <h5 class="font-extra-bold c-subtitle">Рейтинг по дедлайну.</h5>
                     <p>Считается суммарный временной интервал для всех задач со сроком выполнения от
                         24.01.2022 (начало обучения Школы ректоров 21). Для нормировки и корректного
                         отображения графиков
                         мы приводим результат целочисленного деления на 10.</p>
                 </div>
                 <div>
-                    <h5 class="font-extra-bold">Рейтинг по плану.</h5>
+                    <h5 class="font-extra-bold c-subtitle">Рейтинг по плану.</h5>
                     <p>Определяется размером списка задач (общее количество задач по всем разделам). </p>
                 </div>
 

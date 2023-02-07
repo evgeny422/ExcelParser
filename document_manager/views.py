@@ -1,6 +1,7 @@
 import json
 import os
 
+from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import FileResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
@@ -32,7 +33,12 @@ class DocumentDetail(View):
 
     def get(self, request, *args, **kwargs):
         doc = get_object_or_404(Document, pk=kwargs['pk'])
-        with open(doc.json_file_path) as f:
+        file_path = doc.json_file_path
+        if settings.DEBUG:
+            file_path = f'{settings.BASE_DIR}{file_path}'
+        print(settings.BASE_DIR)
+        print(file_path)
+        with open(file_path) as f:
             data = json.load(f, )
 
         return render(request, 'documents/document_detail.html',
