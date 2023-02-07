@@ -1,0 +1,42 @@
+@font-face {
+    font-family: 'icons';
+    src: url("/static/fonts/icons.ttf?3ipud6") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="_icon-"], [class*=" _icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icons', !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+._icon-triangle:before {
+    content: "\e900";
+    color: #fdb412;
+}
+
+._icon-arrow:before {
+    content: "\e901";
+    color: #fdb412;
+}
+
+._icon-download:before {
+    content: "\e902";
+    color: #fdb412;
+}
+
+._icon-update:before {
+    content: "\e903";
+    color: #fdb412;
+}
