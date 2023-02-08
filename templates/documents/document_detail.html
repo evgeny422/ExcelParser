@@ -117,8 +117,7 @@
 {% block js_block %}
     <script src="{% static 'includes/chartjs/chart.js' %}"></script>
     <script>
-        let projectData =
-        {{ data|safe }}
+        let projectData ={{ data|safe }};
     </script>
     <script src="{% static 'js/project_detail.js' %}"></script>
 {% endblock %}
