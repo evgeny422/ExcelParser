@@ -25,9 +25,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex me-auto">
+            <form class="d-flex me-auto" action="{% url 'search' %}" method="get">
                 <button class="navbar-link search-btn" type="submit">Поиск</button>
-                <input class="search-input" type="search" aria-label="Search">
+                <input class="search-input" type="search" aria-label="Search" name="q" value="{{ q }}">
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0 h-100">
                 <li class="navbar-btn">
