@@ -13,6 +13,12 @@
 /*Table styles*/
 @import "tables.css";
 
+/*Common blocks styles*/
+@import "blocks.css";
+
+/*Project detail styles*/
+@import "project_detail.css";
+
 
 html {
     font-family: "InterSemiBold";

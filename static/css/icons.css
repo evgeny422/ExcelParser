@@ -1,6 +1,7 @@
 @font-face {
     font-family: 'icons';
-    src: url("/static/fonts/icons.ttf?3ipud6") format('truetype');
+    /*src: url("/static/fonts/icons.ttf?3ipud6") format('truetype');*/
+    src: url("/static/fonts/icons.ttf") format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -8,7 +9,7 @@
 
 [class^="_icon-"], [class*=" _icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icons', !important;
+    font-family: 'icons', serif !important;
     speak: never;
     font-style: normal;
     font-weight: normal;

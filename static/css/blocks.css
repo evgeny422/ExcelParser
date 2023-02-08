@@ -1,0 +1,12 @@
+.common-block {
+    background: #FFFFFF;
+    border-radius: 24px;
+}
+
+.breadcrumb {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #6E6E71;
+}
+
