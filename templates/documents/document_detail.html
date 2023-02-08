@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="col-lg-4 text-center text-lg-start mt-3 mt-lg-0">
                                     <div class="project-info-title">
-                                        План
+                                        Статус
                                     </div>
                                     <div class="project-info-value">
                                         34
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-lg-4 text-center text-lg-start">
                                     <div class="project-info-title">
-                                        Статус
+                                        Дедлайн
                                     </div>
                                     <div class="project-info-value">
                                         26
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-lg-4 text-center text-lg-start">
                                     <div class="project-info-title">
-                                        Дедлайн
+                                        План
                                     </div>
                                     <div class="project-info-value">
                                         14
@@ -69,23 +69,20 @@
             <div class="project-graph">
                 <div class="common-block project-graph-detail">
                     <div class="project-graph-title text-center"><span>График изменения проекта</span></div>
-                    <div class="project-graph-colors">
-                        <div class="color text-center">
-                            <div class="project-graph-color" style="background: #98B2E5;"></div>
-                            <div class="color-title">План</div>
-                        </div>
-                        <div class="color text-center">
-                            <div class="project-graph-color" style="background: #ED9C87;"></div>
-                            <div class="color-title">Статус</div>
-                        </div>
-                        <div class="color text-center">
-                            <div class="project-graph-color" style="background: #FECA7E;"></div>
-                            <div class="color-title">Дедлайн</div>
-                        </div>
+                    <div class="project-graph-colors" id="legend-colors">
+                        <ul id="project-chart-legend"></ul>
+                        {#                        <li class="color text-center">#}
+                        {#                            <div class="project-graph-color" style="background: #ED9C87;"></div>#}
+                        {#                            <div class="color-title">Статус</div>#}
+                        {#                        </li>#}
+                        {#                        <li class="color text-center">#}
+                        {#                            <div class="project-graph-color" style="background: #FECA7E;"></div>#}
+                        {#                            <div class="color-title">Дедлайн</div>#}
+                        {#                        </li>#}
                     </div>
+                    {#                    <div id="chart"></div>#}
                     <div class="project-graph">
-                        <div id="chart">
-                        </div>
+                        <canvas id="project-chart" height="150"></canvas>
                     </div>
                 </div>
             </div>
@@ -113,39 +110,15 @@
     {#        </div>#}
     {##}
     {#        <div>#}
-    <div id="chart">
-
-    </div>
     {#        </div>#}
     {#    </div>#}
-    <script>
-
-
-        var vf =
-        {{ data|safe }}
-
-
-        var chart = c3.generate({
-            bindto: '#chart',
-
-            data: {
-
-                columns: [
-
-                    vf['y1'],
-                    vf['y2'],
-                    vf['y3'],
-                ],
-
-                types: {
-                    "Статус": "bar",
-                    "Дедлайн": "bar",
-                    "План": "bar",
-                }
-            },
-
-        });
-
-    </script>
 {% endblock %}
 
+{% block js_block %}
+    <script src="{% static 'includes/chartjs/chart.js' %}"></script>
+    <script>
+        let projectData =
+        {{ data|safe }}
+    </script>
+    <script src="{% static 'js/project_detail.js' %}"></script>
+{% endblock %}
