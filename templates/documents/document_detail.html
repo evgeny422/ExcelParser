@@ -6,15 +6,25 @@
         <div class="col-lg-2"></div>
         <div class="col-lg-10">
             <div class="breadcrumb ">
-                Главная / {{ event }} / ..
+                <a href="/">Главная</a> /<a href="{% url 'documents_event_slug' document.event.title %}">{{ document.event.title }}</a>/ {{ document.title }}
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-2">
-            <ul>
-                <li><span class="_icon-update"></span>Обновить проект</li>
-                <li><span class="_icon-download"></span>Скачать файл</li>
+            <ul class="sidebar-menu">
+                <a class="menu-link" href="#" data-bs-toggle="modal" data-bs-target="#updateModal">
+                    <li class="menu-item justify-content-center justify-content-lg-start">
+                        <div class="menu-icon"><span class="_icon-update"></span></div>
+                        <div class="">Обновить проект</div>
+                    </li>
+                </a>
+                <a class="menu-link" href="{% url 'download' document.pk %}">
+                    <li class="menu-item justify-content-center justify-content-lg-start">
+                        <div class="menu-icon"><span class="_icon-download"></span></div>
+                        <div>Скачать файл</div>
+                    </li>
+                </a>
             </ul>
         </div>
         <div class="col-lg-10">
@@ -34,8 +44,16 @@
                                         Статус
                                     </div>
                                     <div class="project-info-value">
-                                        34
-                                        <div class="project-value-changed">+0</div>
+                                        {{ document.status_ratio }}
+                                        {% if document.status_changed_ratio == 0 %}
+                                            <div class="project-value-changed neutral-value">
+                                                +{{ document.status_changed_ratio }}</div>
+                                        {% elif document.status_changed_ratio > 0 %}
+                                            <div class="project-value-changed positive-value">
+                                                +{{ document.status_changed_ratio }}</div>
+                                        {% else %}
+                                            <div class="project-value-changed negative-value">{{ document.status_changed_ratio }}</div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-lg-4 text-center text-lg-start">
@@ -43,8 +61,16 @@
                                         Дедлайн
                                     </div>
                                     <div class="project-info-value">
-                                        26
-                                        <div class="project-value-changed">+3</div>
+                                        {{ document.deadline_ratio }}
+                                        {% if document.deadline_changed_ratio == 0 %}
+                                            <div class="project-value-changed neutral-value">
+                                                +{{ document.deadline_changed_ratio }}</div>
+                                        {% elif document.deadline_changed_ratio >= 0 %}
+                                            <div class="project-value-changed positive-value">
+                                                +{{ document.deadline_changed_ratio }}</div>
+                                        {% else %}
+                                            <div class="project-value-changed negative-value">{{ document.deadline_changed_ratio }}</div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-lg-4 text-center text-lg-start">
@@ -52,8 +78,16 @@
                                         План
                                     </div>
                                     <div class="project-info-value">
-                                        14
-                                        <div class="project-value-changed">-7</div>
+                                        {{ document.action_plan_ratio }}
+                                        {% if document.action_changed_ratio == 0 %}
+                                            <div class="project-value-changed neutral-value">
+                                                +{{ document.action_changed_ratio }}</div>
+                                        {% elif document.action_changed_ratio > 0 %}
+                                            <div class="project-value-changed positive-value">
+                                                +{{ document.action_changed_ratio }}</div>
+                                        {% else %}
+                                            <div class="project-value-changed negative-value">{{ document.action_changed_ratio }}</div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -112,6 +146,7 @@
     {#        <div>#}
     {#        </div>#}
     {#    </div>#}
+    {% include 'includes/modals/update_project_modal.html' %}
 {% endblock %}
 
 {% block js_block %}

@@ -1,0 +1,31 @@
+.sidebar-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+    display: flex;
+    flex-direction: row;
+    padding: 7px 10px;
+    cursor: pointer;
+}
+
+.menu-icon {
+    flex-basis: 20px;
+}
+
+.menu-item:hover {
+    background: #E6E6F6;
+    border-radius: 15px;
+}
+
+.menu-link {
+    text-decoration: none !important;
+}

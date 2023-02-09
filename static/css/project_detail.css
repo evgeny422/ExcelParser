@@ -71,6 +71,18 @@
     opacity: 0.8;
 }
 
+.negative-value {
+    color: #C80002;
+}
+
+.positive-value {
+    color: #55A049;
+}
+
+.neutral-value {
+    color: rgba(0, 0, 0, 0.55);
+}
+
 .project-graph-color {
     background: #98B2E5;
     border-radius: 24px;

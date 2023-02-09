@@ -1,5 +1,7 @@
+import json
 from abc import abstractmethod
 
+from django.conf import settings
 from django.core.exceptions import FieldError
 from django.db import models
 from django.urls import reverse
@@ -71,15 +73,56 @@ class Document(DocumentAbstract, models.Model):
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
 
+    _file_json = None
+
     class Meta:
         verbose_name = 'Документ'
         verbose_name_plural = 'Документ'
+
+    def __init__(self, *args, **kwargs):
+        super(Document, self).__init__(*args, **kwargs)
+        self._file_json = self.get_file_json()
 
     def get_file_path(self):
         if self.uploaded_file.path:
             return f"{self.uploaded_file.path}"
 
         return self.uploaded_file.url
+
+    def get_file_json(self):
+        if self._file_json:
+            return self._file_json
+        file_path = self.json_file_path
+        if settings.DEBUG:
+            file_path = f'{settings.BASE_DIR}{file_path}'
+        if file_path:
+            with open(file_path) as f:
+                return json.load(f, )
+        return {}
+
+    def deadline_changed_ratio(self):
+        data = self.get_file_json()
+        is_changed = len(data['y2']) > 1
+        if is_changed:
+            prev_deadline = data['y2'][len(data['y2']) - 2]
+            return self.deadline_ratio - int(prev_deadline)
+        return 0
+
+    def status_changed_ratio(self):
+        data = self.get_file_json()
+        is_changed = len(data['y1']) > 1
+        if is_changed:
+            prev_status = data['y1'][len(data['y1']) - 2]
+            return self.status_ratio - int(prev_status)
+        return 0
+
+    def action_changed_ratio(self):
+        data = self.get_file_json()
+        is_changed = len(data['y3']) > 1
+        if is_changed:
+            prev_action = data['y3'][len(data['y3']) - 2]
+            return self.action_plan_ratio - int(prev_action)
+        return 0
 
     def get_title(self):
         return f"{self.title}"

@@ -38,7 +38,7 @@
     font-weight: 500;
 }
 
-.create-project-modal-content {
+.create-project-modal-content, .update-modal-content {
     max-width: 630px;
 }
 

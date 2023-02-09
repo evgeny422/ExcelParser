@@ -10,14 +10,17 @@
 /*Modal styles*/
 @import "modals.css";
 
-/*Table styles*/
+/* Table styles */
 @import "tables.css";
 
-/*Common blocks styles*/
+/* Common blocks styles */
 @import "blocks.css";
 
-/*Project detail styles*/
+/* Project detail styles */
 @import "project_detail.css";
+
+/*Menu styles */
+@import "menu.css";
 
 
 html {

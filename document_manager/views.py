@@ -36,8 +36,6 @@ class DocumentDetail(View):
         file_path = doc.json_file_path
         if settings.DEBUG:
             file_path = f'{settings.BASE_DIR}{file_path}'
-        print(settings.BASE_DIR)
-        print(file_path)
         with open(file_path) as f:
             data = json.load(f, )
 
@@ -203,7 +201,7 @@ class DocumentUpdate(View):
 
             return redirect('documents')
 
-        # return render(request, 'documents/message.html', {'message': form.errors})
+        return render(request, 'documents/document_detail.html', {'message': form.errors, 'document': obj})
 
 
 class DownloadInitialFile(View):
