@@ -44,6 +44,10 @@
     cursor: pointer;
 }
 
+.history-document-table {
+    border: none !important;
+}
+
 .history-document-table tr:hover td {
     background: #E6E6F7;
     cursor: pointer;
@@ -74,4 +78,27 @@
     border-right-style: solid;
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
+}
+
+.history-document-table th, .history-document-table td {
+    border: none !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #FDB412 !important;
+    border-radius: 50% !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    color: #000000 !important;
 }

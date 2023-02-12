@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block head_block %}
+    <link rel="stylesheet" href="{% static 'includes/datatable/css/jquery.dataTables.min.css' %}">
+    <script src="{% static 'includes/datatable/js/jquery.dataTables.min.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     <div class="row" style="margin-top: 14px; padding: 0 75px">
         <div class="col-lg-12">
@@ -27,7 +32,8 @@
                              data-bs-parent="#accordionHistoryProjects">
                             <div class="accordion-body accordion-custom-body">
                                 <div class="table-responsive">
-                                    <table class="history-document-table w-100">
+                                    <table class="history-document-table w-100"
+                                           id="history-table-{{ forloop.counter }}">
                                         <thead>
                                         <th class="c-secondary">№</th>
                                         <th class="c-secondary">Название</th>
@@ -38,13 +44,15 @@
                                         <tbody>
                                         {% for document in event.document_set.all %}
                                             <tr onclick="location.href='{% url 'document' document.pk %}'">
-                                                <td scope="row" class="c-secondary" style="margin-bottom: 19px; padding: 8px;">{{ forloop.counter }}</td>
+                                                <td scope="row" class="c-secondary"
+                                                    style="margin-bottom: 19px; padding: 8px;">{{ forloop.counter }}</td>
                                                 <td class="history-td">
                                                     {{ document.title }}
                                                 </td>
                                                 <td class="history-td" align="center">{{ document.status_ratio }}</td>
                                                 <td class="history-td" align="center">{{ document.deadline_ratio }}</td>
-                                                <td class="history-td" align="center">{{ document.action_plan_ratio }}</td>
+                                                <td class="history-td"
+                                                    align="center">{{ document.action_plan_ratio }}</td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -189,4 +197,23 @@
     {#    </div>#}
 {% endblock %}
 
-{% block js_block %}{% endblock %}
+{% block js_block %}
+    <script>
+        jQuery(document).ready(function () {
+            $tables = new DataTable('table[id^=history-table-]', {
+                dom: 't<"d-flex justify-content-center"p>',
+                ordering: false,
+                pageLength: 5,
+                language: {
+                    oPaginate: {
+                        sNext: '<div class="d-flex align-content-center justify-content-center"><span class="svg-arrow i-left"></span></div>',
+                        sPrevious: '<div class="d-flex align-content-center justify-content-center"><span class="svg-arrow i-right"></span></div>',
+                        {#sFirst: '<i class="fa fa-step-backward"></i>',#}
+                        {#sLast: '<i class="fa fa-step-forward"></i>'#}
+                    }
+                }
+            });
+            console.log($tables);
+        });
+    </script>
+{% endblock %}

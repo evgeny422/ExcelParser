@@ -15,10 +15,11 @@
     flex-direction: row;
     padding: 7px 10px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .menu-icon {
-    flex-basis: 20px;
+    flex-basis: 24px;
 }
 
 .menu-item:hover {

@@ -41,3 +41,19 @@
     content: "\e903";
     color: #fdb412;
 }
+
+.i-left {
+    transform: rotate(-90deg) !important;
+}
+
+.i-right {
+    transform: rotate(90deg) !important;
+}
+
+.svg-arrow {
+    background-image: url("/static/icons/arrow.svg");
+    background-size: 15px;
+    width: 15px;
+    height: 13px;
+    background-repeat: no-repeat;
+}
