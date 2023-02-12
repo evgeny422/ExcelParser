@@ -10,3 +10,52 @@
     color: #6E6E71;
 }
 
+.accordion-custom-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 0;
+    border-radius: 24px;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.1em;
+    color: #725000;
+    padding: 23px 80px;
+    width: 100%;
+    text-align: left;
+}
+
+.accordion-custom-button:not(.collapsed)::after {
+    background-image: url("/static/icons/arrow.svg");
+    transform: rotate(-180deg);
+}
+
+.accordion-custom-button::after {
+    flex-shrink: 0;
+    width: 30px;
+    height: 17px;
+    margin-left: auto;
+    content: "";
+    background-image: url("/static/icons/arrow.svg");
+    background-repeat: no-repeat;
+    background-size: 30px;
+    transition: transform .2s ease-in-out;
+    transform: none;
+}
+
+
+.accordion-custom-header {
+    background: #FFFFFF;
+    border-radius: 24px;
+    margin-bottom: 14px;
+}
+
+.accordion-custom-item {
+}
+
+.accordion-custom-body {
+    padding: 13px 80px 27px 80px!important;
+}
+

@@ -43,3 +43,35 @@
     background-color: #E6E6F7;
     cursor: pointer;
 }
+
+.history-document-table tr:hover td {
+    background: #E6E6F7;
+    cursor: pointer;
+    /*font-weight: 700;*/
+    /*font-size: 18px;*/
+    /*line-height: 22px;*/
+    /*letter-spacing: 0.06em;*/
+    /*color: #000000;*/
+
+}
+
+.history-td {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.07em;
+    color: #000000;
+    padding: 8px;
+}
+
+.history-document-table td:first-child {
+    border-left-style: solid;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.history-document-table td:last-child {
+    border-right-style: solid;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}

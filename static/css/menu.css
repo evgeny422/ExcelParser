@@ -29,3 +29,26 @@
 .menu-link {
     text-decoration: none !important;
 }
+
+.admin-sidebar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.admin-link {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #6E6E71;
+    border-radius: 15px;
+    text-decoration: none;
+    padding: 7px 10px;
+    width: max-content;
+}
+
+.admin-link:hover {
+    color: #6E6E71;
+    background: #E6E6F6;
+}

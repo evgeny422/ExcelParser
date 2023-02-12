@@ -93,3 +93,9 @@ body {
     color: #6E6E71;
     outline: none !important;
 }
+
+.breadcrumb a {
+    color: #6E6E71;
+    text-decoration: none;
+    margin: 0 5px;
+}

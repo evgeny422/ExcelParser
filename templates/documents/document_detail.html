@@ -6,7 +6,9 @@
         <div class="col-lg-2"></div>
         <div class="col-lg-10">
             <div class="breadcrumb ">
-                <a href="/">Главная</a> /<a href="{% url 'documents_event_slug' document.event.title %}">{{ document.event.title }}</a>/ {{ document.title }}
+                <a href="/">Главная</a>/
+                <a href="{% url 'documents_event_slug' document.event.title %}">{{ document.event.title }}</a>/
+                <a href="#">{{ document.title }}</a>
             </div>
         </div>
     </div>
@@ -16,7 +18,7 @@
                 <a class="menu-link" href="#" data-bs-toggle="modal" data-bs-target="#updateModal">
                     <li class="menu-item justify-content-center justify-content-lg-start">
                         <div class="menu-icon"><span class="_icon-update"></span></div>
-                        <div class="">Обновить проект</div>
+                        <div>Обновить проект</div>
                     </li>
                 </a>
                 <a class="menu-link" href="{% url 'download' document.pk %}">
@@ -26,6 +28,14 @@
                     </li>
                 </a>
             </ul>
+            {% if request.user.is_authenticated and request.user.is_superuser %}
+                <hr>
+                <ul class="admin-sidebar justify-content-center justify-content-lg-start mb-3">
+                    <a href="{% url 'delete' document.pk %}" class="admin-link">
+                        <li>Удалить проект</li>
+                    </a>
+                </ul>
+            {% endif %}
         </div>
         <div class="col-lg-10">
             <div class="project-detail">
@@ -40,11 +50,13 @@
                         <div class="col-lg-8">
                             <div class="row">
                                 <div class="col-lg-4 text-center text-lg-start mt-3 mt-lg-0">
-                                    <div class="project-info-title">
+                                    <div class="project-info-title mb-3 mb-lg-5">
                                         Статус
                                     </div>
-                                    <div class="project-info-value">
-                                        {{ document.status_ratio }}
+                                    <div class="project-info-value justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                                        <div class="value-ratio">
+                                            {{ document.status_ratio }}
+                                        </div>
                                         {% if document.status_changed_ratio == 0 %}
                                             <div class="project-value-changed neutral-value">
                                                 +{{ document.status_changed_ratio }}</div>
@@ -57,11 +69,11 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 text-center text-lg-start">
-                                    <div class="project-info-title">
+                                    <div class="project-info-title mb-3 mb-lg-5">
                                         Дедлайн
                                     </div>
-                                    <div class="project-info-value">
-                                        {{ document.deadline_ratio }}
+                                    <div class="project-info-value justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                                        <div class="value-ratio">{{ document.deadline_ratio }}</div>
                                         {% if document.deadline_changed_ratio == 0 %}
                                             <div class="project-value-changed neutral-value">
                                                 +{{ document.deadline_changed_ratio }}</div>
@@ -74,11 +86,11 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 text-center text-lg-start">
-                                    <div class="project-info-title">
+                                    <div class="project-info-title mb-3 mb-lg-5">
                                         План
                                     </div>
-                                    <div class="project-info-value">
-                                        {{ document.action_plan_ratio }}
+                                    <div class="project-info-value justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                                        <div class="value-ratio">{{ document.action_plan_ratio }}</div>
                                         {% if document.action_changed_ratio == 0 %}
                                             <div class="project-value-changed neutral-value">
                                                 +{{ document.action_changed_ratio }}</div>

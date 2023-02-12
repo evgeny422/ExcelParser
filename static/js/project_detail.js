@@ -1,23 +1,23 @@
-var chart = c3.generate({
-    bindto: '#chart',
-
-    data: {
-
-        columns: [
-
-            projectData['y1'],
-            projectData['y2'],
-            projectData['y3'],
-        ],
-
-        types: {
-            "Статус": "bar",
-            "Дедлайн": "bar",
-            "План": "bar",
-        }
-    },
-
-});
+// var chart = c3.generate({
+//     bindto: '#chart',
+//
+//     data: {
+//
+//         columns: [
+//
+//             projectData['y1'],
+//             projectData['y2'],
+//             projectData['y3'],
+//         ],
+//
+//         types: {
+//             "Статус": "bar",
+//             "Дедлайн": "bar",
+//             "План": "bar",
+//         }
+//     },
+//
+// });
 
 
 // let projectData = {

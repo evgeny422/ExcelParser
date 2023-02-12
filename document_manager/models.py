@@ -93,35 +93,45 @@ class Document(DocumentAbstract, models.Model):
         if self._file_json:
             return self._file_json
         file_path = self.json_file_path
-        if settings.DEBUG:
+        if settings.DEBUG and file_path:
             file_path = f'{settings.BASE_DIR}{file_path}'
         if file_path:
             with open(file_path) as f:
                 return json.load(f, )
         return {}
 
+    def last_deadline_count(self):
+        return int(self.get_file_json()['y2'][-1])
+
+    def last_status_count(self):
+        return int(self.get_file_json()['y1'][-1])
+
+    def last_action_count(self):
+        return int(self.get_file_json()['y3'][-1])
+
     def deadline_changed_ratio(self):
         data = self.get_file_json()
-        is_changed = len(data['y2']) > 1
+        is_changed = len(data['y2']) > 2
         if is_changed:
-            prev_deadline = data['y2'][len(data['y2']) - 2]
-            return self.deadline_ratio - int(prev_deadline)
+            prev_deadline = data['y2'][-2]
+            return int(data['y2'][-1]) - int(prev_deadline)
         return 0
 
     def status_changed_ratio(self):
         data = self.get_file_json()
-        is_changed = len(data['y1']) > 1
+        print(data)
+        is_changed = len(data['y1']) > 2
         if is_changed:
             prev_status = data['y1'][len(data['y1']) - 2]
-            return self.status_ratio - int(prev_status)
+            return int(data['y1'][-1]) - int(prev_status)
         return 0
 
     def action_changed_ratio(self):
         data = self.get_file_json()
-        is_changed = len(data['y3']) > 1
+        is_changed = len(data['y3']) > 2
         if is_changed:
             prev_action = data['y3'][len(data['y3']) - 2]
-            return self.action_plan_ratio - int(prev_action)
+            return int(data['y3'][-1]) - int(prev_action)
         return 0
 
     def get_title(self):
