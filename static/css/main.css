@@ -57,6 +57,8 @@ body {
     padding: 18px 15px;
     color: white;
     text-decoration: none;
+    display: inline-block;
+    white-space: nowrap;
 }
 
 .btn-common:hover {
