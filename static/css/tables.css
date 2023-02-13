@@ -1,6 +1,6 @@
 .document-table {
-    border-collapse: separate;
-    border-spacing: 0 10px;
+    border-collapse: separate !important;
+    border-spacing: 0 10px !important;
 }
 
 .document-table thead th {
@@ -24,7 +24,7 @@
 }
 
 .document-table tbody td {
-    margin-top: 11px;
+    margin-top: 11px !important;
 }
 
 .document-table td:first-child {

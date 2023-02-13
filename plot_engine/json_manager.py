@@ -1,6 +1,8 @@
 import json
 import os
 
+from django.conf import settings
+
 from ExcelParser.settings import BASE_DIR
 
 
@@ -32,10 +34,11 @@ def generate_sample():
 
 def upload_data(file: str = None, time_delta: str = None, status_value: str = None, deadline_value: str = None,
                 plan_value: str = None):
-    with open(file) as f:
+    file_path = os.path.join(settings.BASE_DIR, *file.split('/'))
+    with open(file_path) as f:
         data = json.load(f)
 
-    with open(file, mode='w') as f:
+    with open(file_path, mode='w') as f:
         data['x'].append(str(time_delta))
         data['y1'].append(str(status_value))
         data['y2'].append(str(deadline_value))

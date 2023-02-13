@@ -24,7 +24,9 @@ class DocumentsList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['update_form'] = DocumentUpdateForm
+        context['update_form'] = DocumentUpdateForm,
+        queryset = Document.objects.filter(event__current=True)
+        context['event'] = queryset.first().event if self.queryset.exists() else None
         return context
 
 
@@ -40,7 +42,7 @@ class DocumentDetail(View):
             data = json.load(f, )
 
         return render(request, 'documents/document_detail.html',
-                      context={'document': doc, 'data': data})
+                      context={'document': doc, 'data': data, 'event': doc.event})
 
 
 class DocumentFromEvent(View):
@@ -50,9 +52,10 @@ class DocumentFromEvent(View):
         event = Event.objects.get(title=kwargs['slug'])
         if event.outdated:
             document_list = Document.objects.filter(event=event.pk)
-            return render(request, template_name='documents/document_event_list.html', context={
+            return render(request, template_name='documents/document_list.html', context={
                 'document_list': document_list,
-                'event_name': event.title
+                'event_name': event.title,
+                'event': event
             })
         else:
             raise Http404
@@ -76,9 +79,10 @@ class DocumentEventSort(View):
 
         document_list = Document.objects.filter(event__title=kwargs['slug']).order_by(key)
         event = Event.objects.get(title=kwargs['slug'])
-        return render(request, template_name='documents/document_event_list.html', context={
+        return render(request, template_name='documents/document_list.html', context={
             'document_list': document_list,
-            'event_name': event.title
+            'event_name': event.title,
+            'event': event
         })
 
     def get_context_data(self, *args, **kwargs):
@@ -96,9 +100,10 @@ class DocumentEventSearch(View):
             event__outdated=True
         )
         event = Event.objects.get(title=kwargs.get('slug'))
-        return render(request, template_name='documents/document_event_list.html', context={
+        return render(request, template_name='documents/document_list.html', context={
             'document_list': document_list,
-            'event_name': event.title
+            'event_name': event.title,
+            'event': event
         })
 
 
@@ -220,8 +225,8 @@ class DocumentHistory(View):
     """
 
     def get(self, request, *args, **kwargs):
-        event = get_list_or_404(Event)
+        events = Event.objects.all()
 
         return render(request, template_name='documents/document_history.html', context={
-            'events': event
+            'events': events,
         })
