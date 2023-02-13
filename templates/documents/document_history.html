@@ -33,7 +33,8 @@
                             <div class="accordion-body accordion-custom-body">
                                 <div class="table-responsive">
                                     <table class="history-document-table w-100"
-                                           id="history-table-{{ forloop.counter }}">
+                                           id="history-table-{{ forloop.counter }}"
+                                           data-table-type="paginate-table-{{ forloop.counter }}">
                                         <thead>
                                         <th class="c-secondary">№</th>
                                         <th class="c-secondary">Название</th>
@@ -198,22 +199,23 @@
 {% endblock %}
 
 {% block js_block %}
-    <script>
-        jQuery(document).ready(function () {
-            $tables = new DataTable('table[id^=history-table-]', {
-                dom: 't<"d-flex justify-content-center"p>',
-                ordering: false,
-                pageLength: 5,
-                language: {
-                    oPaginate: {
-                        sNext: '<div class="d-flex align-content-center justify-content-center"><span class="svg-arrow i-left"></span></div>',
-                        sPrevious: '<div class="d-flex align-content-center justify-content-center"><span class="svg-arrow i-right"></span></div>',
+    <script src="{% static 'js/paginate_table.js' %}"></script>
+{#    <script>#}
+{#        jQuery(document).ready(function () {#}
+{#            $tables = new DataTable('table[id^=history-table-]', {#}
+{#                dom: 't<"d-flex justify-content-center"p>',#}
+{#                ordering: false,#}
+{#                pageLength: 5,#}
+{#                language: {#}
+{#                    oPaginate: {#}
+{#                        sNext: '<div class="d-flex align-content-center justify-content-center"><span class="svg-arrow i-left"></span></div>',#}
+{#                        sPrevious: '<div class="d-flex align-content-center justify-content-center"><span class="svg-arrow i-right"></span></div>',#}
                         {#sFirst: '<i class="fa fa-step-backward"></i>',#}
                         {#sLast: '<i class="fa fa-step-forward"></i>'#}
-                    }
-                }
-            });
-            console.log($tables);
-        });
-    </script>
+{#                    }#}
+{#                }#}
+{#            });#}
+{#            console.log($tables);#}
+{#        });#}
+{#    </script>#}
 {% endblock %}
