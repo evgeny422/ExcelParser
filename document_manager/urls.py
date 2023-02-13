@@ -16,7 +16,7 @@ urlpatterns = [
     path('event/<str:slug>/sort', DocumentEventSort.as_view(), name='document_event_sort'),
     path('event/<str:slug>/search', DocumentEventSearch.as_view(), name='document_event_search'),
 
-path('history/', DocumentHistory.as_view(), name='documents_history'),
+    path('history/', DocumentHistory.as_view(), name='documents_history'),
 
     path('doc/<int:pk>/', DocumentDetail.as_view(), name='document'),
     path('download/<int:pk>/', DocumentDownload.as_view(), name='download'),
@@ -24,4 +24,3 @@ path('history/', DocumentHistory.as_view(), name='documents_history'),
     path('update/<int:pk>/', DocumentUpdate.as_view(), name='update'),
 
 ]
-

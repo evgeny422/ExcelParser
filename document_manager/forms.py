@@ -15,7 +15,9 @@ class DocumentUpdateForm(ModelForm):
     class Meta:
         model = Document
         fields = ('title', 'password', 'uploaded_file', 'event')
-        widgets = {'password': PasswordInput, }
+        widgets = {
+            'password': PasswordInput,
+        }
 
     def clean_password(self):
         password = self.cleaned_data['password']

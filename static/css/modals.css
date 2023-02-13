@@ -1,0 +1,47 @@
+/* Modal styles */
+
+.custom-modal {
+
+}
+
+.faq-modal {}
+
+.faq-modal-content {
+    max-width: 850px;
+}
+
+.modal-content {
+    border-radius: 0px;
+}
+
+.modal-body {
+    padding: 70px 65px;
+}
+
+.modal-backdrop {
+   background-color: #434354;
+}
+
+.modal-content p {
+    text-align: justify;
+}
+
+.btn-common-outline {
+    letter-spacing: 0.07em;
+    font-size: 16px;
+    line-height: 22px;
+    border: 2px solid #725000;
+    border-radius: 24px;
+    color: #725000;
+    padding: 10px 13px;
+    background: white;
+    font-weight: 500;
+}
+
+.create-project-modal-content, .update-modal-content {
+    max-width: 630px;
+}
+
+form hr {
+    margin: 12px 0;
+}

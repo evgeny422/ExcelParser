@@ -1,0 +1,109 @@
+.document-table {
+    border-collapse: separate !important;
+    border-spacing: 0 10px !important;
+}
+
+.document-table thead th {
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+    letter-spacing: 0.05em;
+    padding: 15px 33px !important;
+    color: #6E6E71;
+}
+
+.document-table tbody td {
+    background: #FFFFFF;
+    padding: 22px 33px !important;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.07em;
+    white-space: nowrap;
+    /*border-radius: 24px;*/
+}
+
+.document-table tbody td {
+    margin-top: 11px !important;
+}
+
+.document-table td:first-child {
+    border-left-style: solid;
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+}
+
+.document-table td:last-child {
+    border-right-style: solid;
+    border-bottom-right-radius: 24px;
+    border-top-right-radius: 24px;
+}
+
+.document-table tr:hover td {
+    background-color: #E6E6F7;
+    cursor: pointer;
+}
+
+.table[data-table-type^=paginate-table-] th {
+    border: none !important;
+}
+
+.history-document-table, table[data-table-type^=paginate-table-] {
+    border: none !important;
+}
+
+.history-document-table tr:hover td {
+    background: #E6E6F7;
+    cursor: pointer;
+    /*font-weight: 700;*/
+    /*font-size: 18px;*/
+    /*line-height: 22px;*/
+    /*letter-spacing: 0.06em;*/
+    /*color: #000000;*/
+
+}
+
+.history-td {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.07em;
+    color: #000000;
+    padding: 8px;
+}
+
+.history-document-table td:first-child {
+    border-left-style: solid;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.history-document-table td:last-child {
+    border-right-style: solid;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.history-document-table th, .history-document-table td, table[data-table-type^=paginate-table-] thead th  {
+    border: none !important;
+    font-weight: 500 !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #FDB412 !important;
+    border-radius: 50% !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    color: #000000 !important;
+}

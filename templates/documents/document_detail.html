@@ -1,64 +1,170 @@
 {% extends 'base.html' %}
-{%block header%}
-    {% include '../includes/header.html' %}
-
-{%endblock%}
+{% load static %}
 
 {% block content %}
-
-    <div class="d-flex" style="margin-top: 10px;">
-
-        <div>
-            <div>
-
-                <a title="Скачать" style="padding-right: 2px; text-decoration:None"
-                   href="{% url 'download' document.pk %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
-                         class="bi bi-arrow-down-square" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                              d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-                    </svg>
-                </a>
-                <span>{{ document.title }}</span>
-                <span>Последнее обновление: {{ document.date_time_of_updated }}</span>
-
-
-            </div>
-        </div>
-
-        <div>
-            <div id="chart">
-
+    <div class="row" style="margin-top: 14px;">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-10">
+            <div class="breadcrumb ">
+                <a href="/">Главная</a>/
+                <a href="{% url 'documents_event_slug' document.event.title %}">{{ document.event.title }}</a>/
+                <a href="#">{{ document.title }}</a>
             </div>
         </div>
     </div>
-    <script>
+    <div class="row">
+        <div class="col-lg-2">
+            <ul class="sidebar-menu">
+                <a class="menu-link" href="#" data-bs-toggle="modal" data-bs-target="#updateModal">
+                    <li class="menu-item justify-content-center justify-content-lg-start">
+                        <div class="menu-icon"><span class="_icon-update"></span></div>
+                        <div>Обновить проект</div>
+                    </li>
+                </a>
+                <a class="menu-link" href="{% url 'download' document.pk %}">
+                    <li class="menu-item justify-content-center justify-content-lg-start">
+                        <div class="menu-icon"><span class="_icon-download"></span></div>
+                        <div>Скачать файл</div>
+                    </li>
+                </a>
+            </ul>
+            {% if request.user.is_authenticated and request.user.is_superuser %}
+                <hr>
+                <ul class="admin-sidebar justify-content-center justify-content-lg-start mb-3">
+                    <a href="{% url 'delete' document.pk %}" class="admin-link">
+                        <li>Удалить проект</li>
+                    </a>
+                </ul>
+            {% endif %}
+        </div>
+        <div class="col-lg-10">
+            <div class="project-detail">
+                <div class="common-block project-detail-info" style="padding-top: 40px;">
+                    <div class="row" style="margin-bottom: 30px;">
+                        <div class="col-lg-4 text-center">
+                            <div class="project-img">
+                                <img src="{% static '/img/project_empty.svg' %}" alt="" width="120" height="120">
+                            </div>
+                            <div class="project-title">{{ document.title }}</div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-4 text-center text-lg-start mt-3 mt-lg-0">
+                                    <div class="project-info-title mb-3 mb-lg-5">
+                                        Статус
+                                    </div>
+                                    <div class="project-info-value justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                                        <div class="value-ratio">
+                                            {{ document.status_ratio }}
+                                        </div>
+                                        {% if document.status_changed_ratio == 0 %}
+                                            <div class="project-value-changed neutral-value">
+                                                +{{ document.status_changed_ratio }}</div>
+                                        {% elif document.status_changed_ratio > 0 %}
+                                            <div class="project-value-changed positive-value">
+                                                +{{ document.status_changed_ratio }}</div>
+                                        {% else %}
+                                            <div class="project-value-changed negative-value">{{ document.status_changed_ratio }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 text-center text-lg-start">
+                                    <div class="project-info-title mb-3 mb-lg-5">
+                                        Дедлайн
+                                    </div>
+                                    <div class="project-info-value justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                                        <div class="value-ratio">{{ document.deadline_ratio }}</div>
+                                        {% if document.deadline_changed_ratio == 0 %}
+                                            <div class="project-value-changed neutral-value">
+                                                +{{ document.deadline_changed_ratio }}</div>
+                                        {% elif document.deadline_changed_ratio >= 0 %}
+                                            <div class="project-value-changed positive-value">
+                                                +{{ document.deadline_changed_ratio }}</div>
+                                        {% else %}
+                                            <div class="project-value-changed negative-value">{{ document.deadline_changed_ratio }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 text-center text-lg-start">
+                                    <div class="project-info-title mb-3 mb-lg-5">
+                                        План
+                                    </div>
+                                    <div class="project-info-value justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                                        <div class="value-ratio">{{ document.action_plan_ratio }}</div>
+                                        {% if document.action_changed_ratio == 0 %}
+                                            <div class="project-value-changed neutral-value">
+                                                +{{ document.action_changed_ratio }}</div>
+                                        {% elif document.action_changed_ratio > 0 %}
+                                            <div class="project-value-changed positive-value">
+                                                +{{ document.action_changed_ratio }}</div>
+                                        {% else %}
+                                            <div class="project-value-changed negative-value">{{ document.action_changed_ratio }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <span class="c-secondary">Последнее обновление {{ document.date_time_of_updated }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="project-graph">
+                <div class="common-block project-graph-detail">
+                    <div class="project-graph-title text-center"><span>График изменения проекта</span></div>
+                    <div class="project-graph-colors" id="legend-colors">
+                        <ul id="project-chart-legend"></ul>
+                        {#                        <li class="color text-center">#}
+                        {#                            <div class="project-graph-color" style="background: #ED9C87;"></div>#}
+                        {#                            <div class="color-title">Статус</div>#}
+                        {#                        </li>#}
+                        {#                        <li class="color text-center">#}
+                        {#                            <div class="project-graph-color" style="background: #FECA7E;"></div>#}
+                        {#                            <div class="color-title">Дедлайн</div>#}
+                        {#                        </li>#}
+                    </div>
+                    {#                    <div id="chart"></div>#}
+                    <div class="project-graph">
+                        <canvas id="project-chart" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-        var vf = {{ data|safe }}
-
-
-        var chart = c3.generate({
-            bindto: '#chart',
-
-            data: {
-
-                columns: [
-
-                    vf['y1'],
-                    vf['y2'],
-                    vf['y3'],
-                ],
-
-                types: {
-                    "Статус":"bar",
-                    "Дедлайн":"bar",
-                    "План":"bar",
-                }
-            },
-
-        });
-
-    </script>
+    {#    <div class="d-flex" style="margin-top: 10px;">#}
+    {##}
+    {#        <div>#}
+    {#            <div>#}
+    {##}
+    {#                <a title="Скачать" style="padding-right: 2px; text-decoration:None"#}
+    {#                   href="{% url 'download' document.pk %}">#}
+    {#                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"#}
+    {#                         class="bi bi-arrow-down-square" viewBox="0 0 16 16">#}
+    {#                        <path fill-rule="evenodd"#}
+    {#                              d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>#}
+    {#                    </svg>#}
+    {#                </a>#}
+    {#                <span>{{ document.title }}</span>#}
+    {#                <span>Последнее обновление: {{ document.date_time_of_updated }}</span>#}
+    {##}
+    {##}
+    {#            </div>#}
+    {#        </div>#}
+    {##}
+    {#        <div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {% include 'includes/modals/update_project_modal.html' %}
 {% endblock %}
 
+{% block js_block %}
+    <script src="{% static 'includes/chartjs/chart.js' %}"></script>
+    <script>
+        let projectData ={{ data|safe }};
+    </script>
+    <script src="{% static 'js/project_detail.js' %}"></script>
+{% endblock %}

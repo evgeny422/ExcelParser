@@ -1,0 +1,103 @@
+@import "fonts.css";
+@import "icons.css";
+
+/* Header styles */
+@import "header.css";
+
+/* Form styles */
+@import "forms.css";
+
+/*Modal styles*/
+@import "modals.css";
+
+/* Table styles */
+@import "tables.css";
+
+/* Common blocks styles */
+@import "blocks.css";
+
+/* Project detail styles */
+@import "project_detail.css";
+
+/*Menu styles */
+@import "menu.css";
+
+
+html {
+    font-family: "InterSemiBold";
+}
+
+body {
+    background: #F4F4FC;
+}
+
+.c-main {
+    color: #FDB412;
+}
+
+.c-secondary {
+    color: #6E6E71;
+}
+
+.c-bg-main {
+    background: #FDB412;
+}
+
+.c-title {
+    color: #725000 !important;
+}
+
+.c-bg-secondary {
+    background: #E6E6F6;
+}
+
+.btn-common {
+    border-radius: 24px;
+    background: #FDB412;
+    padding: 18px 15px;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.btn-common:hover {
+    color: white;
+    background: #725000;
+}
+
+.btn-secondary {
+    border-radius: 24px;
+    padding: 8px 20px;
+    text-decoration: none;
+    outline: none !important;
+    border: none;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #6E6E71;
+    background: #E6E6F6;
+}
+
+.btn-secondary::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.155em;
+    content: "";
+    border-top: 0.5em solid;
+    border-right: 0.4em solid transparent;
+    border-bottom: 0;
+    border-left: 0.4em solid transparent;
+}
+
+.btn-secondary:hover {
+    background: #cacada;
+    color: #6E6E71;
+    outline: none !important;
+}
+
+.breadcrumb a {
+    color: #6E6E71;
+    text-decoration: none;
+    margin: 0 5px;
+}

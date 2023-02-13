@@ -1,0 +1,63 @@
+@font-face {
+    font-family: "InterBold";
+    font-style: normal;
+    src: url("/static/fonts/inter/Inter-Bold.ttf");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "InterSemiBold";
+    font-style: normal;
+    src: url("/static/fonts/inter/Inter-SemiBold.ttf");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "InterBlack";
+    font-style: normal;
+    src: url("/static/fonts/inter/Inter-Black.ttf");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "InterExtraBold";
+    font-style: normal;
+    src: url("/static/fonts/inter/Inter-ExtraBold.ttf");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "InterMedium";
+    font-style: normal;
+    src: url("/static/fonts/inter/Inter-Medium.ttf");
+    font-display: swap;
+}
+
+.font-bold {
+    font-family: "InterBold", serif;
+}
+
+.font-semi-bold {
+    font-family: "InterSemiBold", serif;
+}
+
+.font-extra-bold {
+    font-family: "InterExtraBold", serif;
+}
+
+.font-medium {
+    font-family: "InterMedium", serif;
+}
+
+.c-title {
+    color: #725000;
+}
+
+.c-link {
+    color: #FDB412;
+}
+
+.c-subtitle {
+    color: rgba(0, 0, 0, 0.55);
+}
+

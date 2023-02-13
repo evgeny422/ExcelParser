@@ -1,6 +1,7 @@
 import json
 import os
 
+from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.http import FileResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
@@ -23,7 +24,9 @@ class DocumentsList(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['update_form'] = DocumentUpdateForm
+        context['update_form'] = DocumentUpdateForm,
+        queryset = Document.objects.filter(event__current=True)
+        context['event'] = queryset.first().event if self.queryset.exists() else None
         return context
 
 
@@ -32,11 +35,14 @@ class DocumentDetail(View):
 
     def get(self, request, *args, **kwargs):
         doc = get_object_or_404(Document, pk=kwargs['pk'])
-        with open(doc.json_file_path) as f:
+        file_path = doc.json_file_path
+        if settings.DEBUG and file_path:
+            file_path = f'{settings.BASE_DIR}{file_path}'
+        with open(file_path) as f:
             data = json.load(f, )
 
         return render(request, 'documents/document_detail.html',
-                      context={'document': doc, 'data': data})
+                      context={'document': doc, 'data': data, 'event': doc.event})
 
 
 class DocumentFromEvent(View):
@@ -46,9 +52,10 @@ class DocumentFromEvent(View):
         event = Event.objects.get(title=kwargs['slug'])
         if event.outdated:
             document_list = Document.objects.filter(event=event.pk)
-            return render(request, template_name='documents/document_event_list.html', context={
+            return render(request, template_name='documents/document_list.html', context={
                 'document_list': document_list,
-                'event_name': event.title
+                'event_name': event.title,
+                'event': event
             })
         else:
             raise Http404
@@ -72,9 +79,10 @@ class DocumentEventSort(View):
 
         document_list = Document.objects.filter(event__title=kwargs['slug']).order_by(key)
         event = Event.objects.get(title=kwargs['slug'])
-        return render(request, template_name='documents/document_event_list.html', context={
+        return render(request, template_name='documents/document_list.html', context={
             'document_list': document_list,
-            'event_name': event.title
+            'event_name': event.title,
+            'event': event
         })
 
     def get_context_data(self, *args, **kwargs):
@@ -92,9 +100,10 @@ class DocumentEventSearch(View):
             event__outdated=True
         )
         event = Event.objects.get(title=kwargs.get('slug'))
-        return render(request, template_name='documents/document_event_list.html', context={
+        return render(request, template_name='documents/document_list.html', context={
             'document_list': document_list,
-            'event_name': event.title
+            'event_name': event.title,
+            'event': event
         })
 
 
@@ -197,7 +206,7 @@ class DocumentUpdate(View):
 
             return redirect('documents')
 
-        # return render(request, 'documents/message.html', {'message': form.errors})
+        return render(request, 'documents/document_detail.html', {'message': form.errors, 'document': obj})
 
 
 class DownloadInitialFile(View):
@@ -216,8 +225,8 @@ class DocumentHistory(View):
     """
 
     def get(self, request, *args, **kwargs):
-        event = get_list_or_404(Event)
+        events = Event.objects.all()
 
         return render(request, template_name='documents/document_history.html', context={
-            'events': event
+            'events': events,
         })
