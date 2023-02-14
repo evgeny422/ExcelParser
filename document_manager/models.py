@@ -93,8 +93,8 @@ class Document(DocumentAbstract, models.Model):
         if self._file_json:
             return self._file_json
         file_path = self.json_file_path
-        if settings.DEBUG and file_path:
-            file_path = f'{settings.BASE_DIR}{file_path}'
+        # if settings.DEBUG and file_path:
+        #     file_path = f'{settings.BASE_DIR}{file_path}'
         if file_path:
             with open(file_path) as f:
                 return json.load(f, )
