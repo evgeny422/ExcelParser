@@ -42,6 +42,8 @@ class Event(models.Model):
     day = models.PositiveSmallIntegerField('День')
     month = models.PositiveSmallIntegerField('Месяц')
     year = models.PositiveSmallIntegerField('Год')
+    mvr_table_url = models.CharField(max_length=255, null=True, blank=True, verbose_name='Ссылка на таблицу (МВР)')
+    mvr_form_url = models.CharField(max_length=255, null=True, blank=True, verbose_name='Ссылка на форму (МВР)')
 
     class Meta:
         verbose_name = 'Событие'
@@ -93,11 +95,16 @@ class Document(DocumentAbstract, models.Model):
         if self._file_json:
             return self._file_json
         file_path = self.json_file_path
-        # if settings.DEBUG and file_path:
-        #     file_path = f'{settings.BASE_DIR}{file_path}'
+        if settings.DEBUG and file_path:
+            file_path = f'{settings.BASE_DIR}{file_path}'
         if file_path:
-            with open(file_path) as f:
-                return json.load(f, )
+            try:
+                with open(file_path) as f:
+                    return json.load(f, )
+            except FileNotFoundError:
+                self._error = {'title': 'FileNotFoundError', 'text': 'Ошибка загрузки файла'}
+                return {}
+
         return {}
 
     def last_deadline_count(self):
