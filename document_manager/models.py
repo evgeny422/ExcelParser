@@ -42,6 +42,8 @@ class Event(models.Model):
     day = models.PositiveSmallIntegerField('День')
     month = models.PositiveSmallIntegerField('Месяц')
     year = models.PositiveSmallIntegerField('Год')
+    mvr_table_url = models.CharField(max_length=255, null=True, blank=True, verbose_name='Ссылка на таблицу (МВР)')
+    mvr_form_url = models.CharField(max_length=255, null=True, blank=True, verbose_name='Ссылка на форму (МВР)')
 
     class Meta:
         verbose_name = 'Событие'

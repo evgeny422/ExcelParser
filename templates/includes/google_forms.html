@@ -1,0 +1,16 @@
+{% if event.mvr_form_url or event.mvr_table_url %}
+    <div class="dropdown">
+        <button class="btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+            Матрица взаимного развития
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            {% if event.mvr_table_url %}
+                <li><a class="dropdown-item" target="_blank" href="{{ event.mvr_table_url }}">Результаты</a></li>
+            {% endif %}
+            {% if event.mvr_form_url %}
+                <li><a class="dropdown-item" target="_blank" href="{{ event.mvr_form_url }}">Форма</a></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}
