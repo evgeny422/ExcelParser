@@ -10,7 +10,7 @@
             <th>Рейтинг по плану</th>
             </thead>
             <tbody>
-            {% for document in event.document_event.all %}
+            {% for document in event.document_set.all %}
                 <tr onclick="location.href='{% url 'document' document.pk %}'">
                     <td scope="row" class="c-secondary">{{ forloop.counter }}</td>
                     <td class="c-title">
