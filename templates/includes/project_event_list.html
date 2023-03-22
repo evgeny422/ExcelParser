@@ -1,0 +1,27 @@
+{% for event in event_list %}
+    <div class="table-responsive">
+        <p class="fs-4 text-dark fw-bold text-uppercase">{{ event.title }}</p>
+        <table class="document-table w-100" data-table-type="paginate-table-0">
+            <thead>
+            <th>№</th>
+            <th>Название</th>
+            <th>Рейтинг по статусу</th>
+            <th>Рейтинг по дедлайну</th>
+            <th>Рейтинг по плану</th>
+            </thead>
+            <tbody>
+            {% for document in event.document_event.all %}
+                <tr onclick="location.href='{% url 'document' document.pk %}'">
+                    <td scope="row" class="c-secondary">{{ forloop.counter }}</td>
+                    <td class="c-title">
+                        {{ document.title }}
+                    </td>
+                    <td class="c-main" align="center">{{ document.status_ratio }}</td>
+                    <td class="c-main" align="center">{{ document.deadline_ratio }}</td>
+                    <td class="c-main" align="center">{{ document.action_plan_ratio }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endfor %}
