@@ -9,8 +9,14 @@ class ParserToDatabase:
         Класс для парсинга файлов "Я - как проект"
     """
 
-    _sheetlists_rules = {'ОБЩИЙ ПЛАН', 'Образование', 'Дело', 'Организация и коллектив', 'Репутация', 'Здоровье',
-                         'Семья и окружение'}
+    _sheetlists_rules = [
+            ['ОБЩИЙ ПЛАН', 'Образование', 'Дело',
+             'Организация и коллектив', 'Репутация',
+             'Здоровье',
+             'Семья и окружение'],
+            ['ОБЩИЙ ПЛАН', 'Образование по УП', 'Программа СРС (на сем.)',
+             'План ПрофРазвития (1 год)', 'Забота о себе']
+        ]
 
     def __init__(self, document):
         self._document = document
@@ -29,10 +35,12 @@ class ParserToDatabase:
         Валидация файла по имеющимся листам
         """
 
-        if set(self.sheetlist).intersection(self._sheetlists_rules) != {'ОБЩИЙ ПЛАН', 'Образование', 'Дело',
-                                                                        'Организация и коллектив', 'Репутация',
-                                                                        'Здоровье',
-                                                                        'Семья и окружение'}:
+        sheetlist = list(set(self.sheetlist))
+        sheetlist.sort(key=lambda x: x)
+        sheet_rules = self._sheetlists_rules
+        [rule.sort(key=lambda x: x) for rule in sheet_rules]
+
+        if sheetlist not in sheet_rules:
             self.wb.close()
             try:
                 self._document.delete()
@@ -58,7 +66,8 @@ class ParserToDatabase:
 
         checklist = {}
         result = {}
-        page_variant = -1 if 'Файлы' or 'файлы' in self.sheetlist else len(self.sheetlist)
+        page_variant = -1 if 'файлы' in self.sheetlist else len(self.sheetlist)
+        print(len(self.sheetlist))
         print(page_variant, self.sheetlist)
         for page in self.check_sheet()[1:page_variant]:
             for v, _, _, _, _, _, c, i in self.wb[page]['H37':'O56']:
