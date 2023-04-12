@@ -66,8 +66,7 @@ class ParserToDatabase:
 
         checklist = {}
         result = {}
-        page_variant = -1 if 'файлы' in self.sheetlist else len(self.sheetlist)
-        print(len(self.sheetlist))
+        page_variant = -1 if 'Файлы' or 'файлы' in self.sheetlist else len(self.sheetlist)
         print(page_variant, self.sheetlist)
         for page in self.check_sheet()[1:page_variant]:
             for v, _, _, _, _, _, c, i in self.wb[page]['H37':'O56']:
