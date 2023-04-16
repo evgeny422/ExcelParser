@@ -18,8 +18,9 @@ class DocumentsList(ListView):
 
     model = Document
     event = Event.objects.filter(outdated=True)
-    queryset = Document.objects.filter(event__current=True).values('pk', 'title', 'deadline_ratio', 'status_ratio',
-                                                                   'action_plan_ratio')
+    # queryset = Document.objects.filter(event__current=True).values('pk', 'title', 'deadline_ratio', 'status_ratio',
+    #                                                                'action_plan_ratio')
+    queryset = Event.objects.filter(current=True)
     template_name = 'documents/document_list.html'
 
     def get_context_data(self, *args, **kwargs):
