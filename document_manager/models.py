@@ -44,6 +44,8 @@ class Event(models.Model):
     year = models.PositiveSmallIntegerField('Год')
     mvr_table_url = models.CharField(max_length=255, null=True, blank=True, verbose_name='Ссылка на таблицу (МВР)')
     mvr_form_url = models.CharField(max_length=255, null=True, blank=True, verbose_name='Ссылка на форму (МВР)')
+    sheet_rules = models.TextField(verbose_name='Листы Excel файла',
+                                   help_text='<Название листа1>;<Название листа2>;...', null=True)
 
     class Meta:
         verbose_name = 'Событие'

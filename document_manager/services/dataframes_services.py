@@ -37,7 +37,11 @@ class ParserToDatabase:
 
         sheetlist = list(set(self.sheetlist))
         sheetlist.sort(key=lambda x: x)
-        sheet_rules = self._sheetlists_rules
+        if self._document.event.sheet_rules:
+            sheet_rules = [self._document.event.sheet_rules.split(';'), ]
+        else:
+            sheet_rules = self._sheetlists_rules
+
         [rule.sort(key=lambda x: x) for rule in sheet_rules]
 
         if sheetlist not in sheet_rules:
