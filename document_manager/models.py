@@ -1,5 +1,6 @@
 import json
 from abc import abstractmethod
+import datetime
 
 from django.conf import settings
 from django.core.exceptions import FieldError
@@ -56,6 +57,9 @@ class Event(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+    def get_start_date(self) -> datetime:
+        return datetime.date(year=self.year, month=self.month, day=self.day)
 
 
 class Document(DocumentAbstract, models.Model):

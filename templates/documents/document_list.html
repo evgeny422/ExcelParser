@@ -30,6 +30,13 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
+            <div class="alert alert-warning" role="alert">
+                Дата начала события <b>«{{ event.title }}»</b> - <b>{{ event.get_start_date }}</b>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
             {% include 'includes/project_list.html' with document_list=document_list %}
         </div>
     </div>
