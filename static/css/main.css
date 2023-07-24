@@ -101,3 +101,11 @@ body {
     text-decoration: none;
     margin: 0 5px;
 }
+
+.dataTables_wrapper .dataTables_length select {
+    border: 2px solid #FDB412 !important;
+    background-color: white !important;
+    border-radius: 8px !important;
+    padding: 5px 5px !important;
+    outline: none !important;
+}
