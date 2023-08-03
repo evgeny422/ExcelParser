@@ -122,7 +122,7 @@ class DocumentSort(ListView):
         key = self.request.GET.get("orderby").strip()
         if key in values.keys():
             key = values.get(key)
-        documents = Document.objects.filter(event__outdated=True).order_by(key)
+        documents = Document.objects.filter(event__outdated=True).order_by(f'-{key}')
         if event_id:
             documents = documents.filter(event_id=event_id)
         return documents
