@@ -118,15 +118,21 @@ class DocumentSort(ListView):
             'Статус': 'status_ratio',
             'План действий': 'action_plan_ratio',
         }
+        event_id = self.request.GET.get("event", None)
         key = self.request.GET.get("orderby").strip()
         if key in values.keys():
             key = values.get(key)
-
-        return Document.objects.filter(event__outdated=True).order_by(key)
+        documents = Document.objects.filter(event__outdated=True).order_by(key)
+        if event_id:
+            documents = documents.filter(event_id=event_id)
+        return documents
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["key"] = self.request.GET.get("key")
+        event_id = self.request.GET.get("event")
+        event = Event.objects.filter(id=event_id)
+        context["event"] = event.first() if event.exists() else None
         return context
 
 

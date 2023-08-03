@@ -10,20 +10,18 @@
         <div class="col-lg-12 d-flex flex-row justify-content-start gap-2 flex-wrap"
              style="margin-top: 30px; margin-bottom: 30px;">
             <div>
-                <form action="{% url 'sorted_documents' %}" method="get">
                     <div class="dropdown">
                         <button class="btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                             Сортировка по
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><input class="dropdown-item" type="submit" name="orderby" value="Дедлайн"></li>
-                            <li><input class="dropdown-item" type="submit" name="orderby" value="Статус"></li>
-                            <li><input class="dropdown-item" type="submit" name="orderby" value="План действий">
+                            <li><a class="dropdown-item" href="{% url 'sorted_documents' %}?event={{ event.id }}&orderby=Дедлайн">Дедлайн</a></li>
+                            <li><a class="dropdown-item" href="{% url 'sorted_documents' %}?event={{ event.id }}&orderby=Статус">Статус</a></li>
+                            <li><a class="dropdown-item" href="{% url 'sorted_documents' %}?event={{ event.id }}&orderby=План действий">План действий</a></li>
                             </li>
                         </ul>
                     </div>
-                </form>
             </div>
             {% include 'includes/google_forms.html' with event=event %}
         </div>
