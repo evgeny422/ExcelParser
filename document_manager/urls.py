@@ -1,13 +1,16 @@
-from django.urls import path
+from django.urls import path, include
 
 from document_manager.views import DocumentsList, DocumentAdd, DocumentSearch, DocumentDetail, DocumentSort, \
     DocumentDownload, DocumentDelete, DocumentUpdate, DownloadInitialFile, DocumentFromEvent, DocumentEventSort, \
-    DocumentEventSearch, DocumentHistory
+    DocumentEventSearch, DocumentHistory, DownloadInitialFileByName
 
 urlpatterns = [
 
     path('', DocumentsList.as_view(), name='documents'),
-    path('download_initial_file/', DownloadInitialFile.as_view(), name='initial_file'),
+    path('download_initial_file/', include([
+        path('', DownloadInitialFile.as_view(), name='initial_file'),
+        path('<str:file_name>', DownloadInitialFileByName.as_view(), name='initial_file_by_name')
+    ])),
     path('search/', DocumentSearch.as_view(), name='search'),
     path('add_document/', DocumentAdd.as_view(), name='add_document'),
     path('sort_documents/', DocumentSort.as_view(), name='sorted_documents'),

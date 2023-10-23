@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.views import View
 from django.views.generic import ListView
 
+from ExcelParser.settings import BASE_DIR
 from ExcelParser.settings_dev import INITIAL_FILE_PATH_
 from document_manager.forms import DocumentUpdateForm, DocumentForm
 from document_manager.models import Document, Event
@@ -224,6 +225,15 @@ class DownloadInitialFile(View):
         filename = INITIAL_FILE_PATH_
         return FileResponse(open(filename, 'rb'))
 
+
+class DownloadInitialFileByName(View):
+
+    def get_file(self, file_name):
+        return os.path.join(BASE_DIR, f'initial_excel_files/{file_name}')
+
+    def get(self, request, file_name, *args, **kwargs):
+        filename = self.get_file(file_name)
+        return FileResponse(open(filename, 'rb'))
 
 class DocumentHistory(View):
     """
