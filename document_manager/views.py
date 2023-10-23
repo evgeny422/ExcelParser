@@ -228,11 +228,11 @@ class DownloadInitialFile(View):
 
 class DownloadInitialFileByName(View):
 
-    def get_file(self, file_name):
+    def get_initial_excel_file(self, file_name):
         return os.path.join(BASE_DIR, f'initial_excel_files/{file_name}')
 
     def get(self, request, file_name, *args, **kwargs):
-        filename = self.get_file(file_name)
+        filename = self.get_initial_excel_file(file_name)
         return FileResponse(open(filename, 'rb'))
 
 class DocumentHistory(View):

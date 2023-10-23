@@ -44,10 +44,11 @@
                                 </label>
                                 <span class="input-file-name">Файл не выбран</span>
                                 <br>
-                                <a class="c-link form-label-indent" href="{% url 'initial_file' %}">Скачать оригинальный
-                                    файл «Я как
-                                    проект»</a>
-                                <br>
+                                <span class="form-label-indent">Скачать оригинальный файл: </span>
+                                <ul class="list-unstyled">
+                                    <li><a class="c-link form-label-indent" href="{% url 'initial_file' %}">«Я как проект»</a></li>
+                                    <li><a class="c-link form-label-indent" href="{% url 'initial_file_by_name' file_name='Я_как_образование.xlsx' %}">«Я как образование»</a></li>
+                                </ul>
                             </div>
                         </div>
                         <hr>
