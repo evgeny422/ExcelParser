@@ -1,5 +1,4 @@
 jQuery(document).ready(function () {
-    console.log('23');
     $tables = new DataTable('table[data-table-type^=paginate-table-]', {
         dom: 'lt<"d-flex justify-content-center mt-2"p>',
         ordering: false,
@@ -14,5 +13,4 @@ jQuery(document).ready(function () {
             lengthMenu: "Количество элементов _MENU_"
         }
     });
-    console.log($tables);
 });
