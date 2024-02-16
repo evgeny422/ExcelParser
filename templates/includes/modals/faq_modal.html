@@ -15,7 +15,7 @@
                     </p>
                     <p>
                         <iframe width="100%" height="315"
-                                src="https://www.youtube.com/embed/57PiVULz-7I?si=yjs2Ye2LiM6vVx3_"
+                                src="https://www.youtube.com/embed/y3mxCaG6pLs?si=NCIdl6D2wUbFZM45"
                                 title="YouTube video player" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
@@ -34,7 +34,9 @@
                     <b>Скачать оригинальный файл:</b>
                     <ul>
                         <li><a class="c-link" href="{% url 'initial_file' %}">«Я как проект»</a></li>
-                        <li><a class="c-link" href="{% url 'initial_file_by_name' file_name='Я_как_образование.xlsx' %}">«Я как образование»</a></li>
+                        <li><a class="c-link"
+                               href="{% url 'initial_file_by_name' file_name='Образование_как_проект.xlsx' %}">«Образование
+                            как проект»</a></li>
                     </ul>
                     <br>
 
@@ -55,8 +57,10 @@
                     <h5 class="font-extra-bold c-subtitle">Рейтинг по дедлайну.</h5>
                     <p>Считается суммарный временной интервал для всех задач со сроком выполнения от
                         начала события, например, от 01.07.2023 (начало обучения для УФА 2023).
-                        Для нормировки и корректного отображения графиков мы приводим результат целочисленного деления на 10.<br>
-                        Например, для 2-х задач со сроками выполнения до 25.07.2023 и 30.07.2023 рейтинг дедлайна будет высчитываться, как
+                        Для нормировки и корректного отображения графиков мы приводим результат целочисленного деления
+                        на 10.<br>
+                        Например, для 2-х задач со сроками выполнения до 25.07.2023 и 30.07.2023 рейтинг дедлайна будет
+                        высчитываться, как
                         (24 + 29) // 10 и будет равен 5.
                     </p>
                 </div>
