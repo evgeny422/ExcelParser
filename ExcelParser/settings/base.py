@@ -117,8 +117,6 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 INITIAL_FILE_NAME_ = 'initial2023'

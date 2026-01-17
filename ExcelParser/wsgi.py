@@ -10,7 +10,11 @@ https://docs.djangoproject.com/en/4.0/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
+from ExcelParser.settings import base
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ExcelParser.settings.base')
+if base.DEBUG:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ExcelParser.settings.dev')
+else:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ExcelParser.settings.prod')
 
 application = get_wsgi_application()
