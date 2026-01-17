@@ -3,7 +3,7 @@ import os
 
 from django.conf import settings
 
-from ExcelParser.settings import BASE_DIR
+from ExcelParser.settings.base import BASE_DIR
 
 
 def create_file_title():

@@ -2,16 +2,16 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
+SECRET_KEY = "django-insecure-oi-wmnfizt-srpnggorn94rfzv5o1gu9b51#&9ak%_tohk%azj"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '88.214.194.86', '95.142.40.224']
 
@@ -58,8 +58,6 @@ TEMPLATES = [
                 'document_manager.context_proc.document_update_form',
                 'document_manager.context_proc.document_add_form',
                 'document_manager.context_proc.get_categories',
-
-
 
             ],
         },
@@ -108,7 +106,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, '../../static'),
 )
 
 # Default primary key field type
@@ -121,7 +119,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
-try:
-    from .settings_dev import *
-except ImportError:
-    pass
+INITIAL_FILE_NAME_ = 'initial2023'
+INITIAL_FILE_PATH_ = os.path.join(BASE_DIR, f'initial_excel_files/{INITIAL_FILE_NAME_}.xlsx')

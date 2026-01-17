@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.views import View
 from django.views.generic import ListView
 
-from ExcelParser.settings import BASE_DIR
+from ExcelParser.settings.base import BASE_DIR
 from ExcelParser.settings_dev import INITIAL_FILE_PATH_
 from document_manager.forms import DocumentUpdateForm, DocumentForm
 from document_manager.models import Document, Event

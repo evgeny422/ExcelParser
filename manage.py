@@ -3,10 +3,15 @@
 import os
 import sys
 
+from ExcelParser.settings import base
+
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ExcelParser.settings')
+    if base.DEBUG:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ExcelParser.settings.dev')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ExcelParser.settings.prod')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
