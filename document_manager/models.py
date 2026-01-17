@@ -122,8 +122,11 @@ class Document(DocumentAbstract, models.Model):
         file_path = self.get_replace_filepath_json()
 
         if file_path:
-            with open(file_path) as f:
-                return json.load(f, )
+            try:
+                with open(file_path) as f:
+                    return json.load(f, )
+            except IsADirectoryError:
+                return {}
         return {}
 
     def last_deadline_count(self):
