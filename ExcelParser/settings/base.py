@@ -105,8 +105,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, '../../static'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 # Default primary key field type
@@ -114,8 +117,7 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 

@@ -1,4 +1,5 @@
 import json
+import os
 from abc import abstractmethod
 import datetime
 
@@ -97,14 +98,29 @@ class Document(DocumentAbstract, models.Model):
 
         return self.uploaded_file.url
 
+    def get_replace_filepath_json(self):
+        # TODO убрал /code/ при переносе сервера временно
+        file_path = self.json_file_path
+
+        file_path = file_path.replace('/code/', '/', 1)
+
+        if file_path:
+            file_path = f'{file_path}'
+
+        if os.path.exists(file_path):
+            return file_path
+        elif os.path.exists(f"{settings.BASE_DIR}{file_path}"):
+            return f"{settings.BASE_DIR}{file_path}"
+
+        return file_path
+
     def get_file_json(self):
         if self._file_json:
+
             return self._file_json
-        file_path = self.json_file_path
-        # if settings.DEBUG and file_path:
-        # TODO убрал /code/ при переносе сервера временно
-        file_path = file_path.replace('/code/', '', 1)
-        file_path = f'{settings.BASE_DIR}{file_path}'
+
+        file_path = self.get_replace_filepath_json()
+
         if file_path:
             with open(file_path) as f:
                 return json.load(f, )
@@ -129,7 +145,6 @@ class Document(DocumentAbstract, models.Model):
 
     def status_changed_ratio(self):
         data = self.get_file_json()
-        print(data)
         is_changed = len(data['y1']) > 2
         if is_changed:
             prev_status = data['y1'][len(data['y1']) - 2]

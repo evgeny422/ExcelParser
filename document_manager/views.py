@@ -36,9 +36,8 @@ class DocumentDetail(View):
 
     def get(self, request, *args, **kwargs):
         doc = get_object_or_404(Document, pk=kwargs['pk'])
-        file_path = doc.json_file_path
-        # if settings.DEBUG and file_path:
-        #     file_path = f'{settings.BASE_DIR}{file_path}'
+        file_path = doc.get_replace_filepath_json()
+
         with open(file_path) as f:
             data = json.load(f, )
 
@@ -173,6 +172,7 @@ class DocumentDownload(View):
     def get(self, request, *args, **kwargs):
         obj = get_object_or_404(Document, pk=kwargs['pk'])
         filename = obj.uploaded_file.path
+
         response = FileResponse(open(filename, 'rb'))
         return response
 
