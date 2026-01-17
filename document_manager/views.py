@@ -67,7 +67,6 @@ class DocumentEventSort(View):
     template_name = 'documents/document_list.html'
 
     def get(self, request, *args, **kwargs):
-        print(kwargs)
         values = {
             'Дедлайн': 'deadline_ratio',
             'Статус': 'status_ratio',
